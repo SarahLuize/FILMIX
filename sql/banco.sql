@@ -1,53 +1,45 @@
--- BANCO DE DADOS --
-CREATE DATABASE sistema;
-USE sistema;
+-- Criar o banco de dados
+CREATE DATABASE filmix;
+USE filmix;
 
--- Tabela de usuários
+-- Usuário
 CREATE TABLE usuario (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(250) NOT NULL,
-    email VARCHAR(250) NOT NULL UNIQUE,
-    senha VARCHAR(250) NOT NULL,
-    data_nascimento DATE NOT NULL
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de filmes (dados vindos da API TMDB)
+-- Filme (dados principais vindos da API TMDB)
 CREATE TABLE filme (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_tmdb INT NOT NULL,
-    cartaz VARCHAR(250),
-    titulo VARCHAR(250),
-    ano YEAR,
+    id_filme INT AUTO_INCREMENT PRIMARY KEY,
+    id_tmdb INT NOT NULL, -- ID do TMDB (único por filme)
+    titulo VARCHAR(200) NOT NULL,
+    idioma_original VARCHAR(10),
+    popularidade DECIMAL(6,2),
+    media_avaliacao DECIMAL(3,1),
+    poster_url VARCHAR(255),
+    data_lancamento DATE,
+    sinopse TEXT,
+    UNIQUE (id_tmdb) -- Evita duplicar filmes do TMDB
+);
+
+-- Recomendação feita por um usuário
+CREATE TABLE recomendacao (
+    id_recomendacao INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    titulo VARCHAR(150), -- Ex: "Melhores de ação 2024"
     descricao TEXT,
-    genero VARCHAR(250),
-    tempo VARCHAR(250),
-    popularidade INT,
-    pais_origem VARCHAR(250),
-    idioma VARCHAR(250),
-    diretor VARCHAR(250),
-    atores VARCHAR(250),
-    nome_estudio VARCHAR(250),
-    adulto BOOLEAN
+    data_recomendacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
--- Tabela de favoritos (relação N:N entre usuário e filme)
-CREATE TABLE favorito (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    fkfilme INT NOT NULL,
-    fkusuario INT NOT NULL,
-    data_favorito DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fkfilme) REFERENCES filme(id),
-    FOREIGN KEY (fkusuario) REFERENCES usuario(id),
-    UNIQUE (fkfilme, fkusuario) -- evita duplicar o mesmo filme nos favoritos
-);
-
--- Tabela de "assistir mais tarde" (relação N:N entre usuário e filme)
-CREATE TABLE assistirmaistarde (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    fkfilme INT NOT NULL,
-    fkusuario INT NOT NULL,
-    data_adicao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fkfilme) REFERENCES filme(id),
-    FOREIGN KEY (fkusuario) REFERENCES usuario(id),
-    UNIQUE (fkfilme, fkusuario) -- evita duplicar o mesmo filme na lista
+-- Relação N:N entre filme e recomendação
+CREATE TABLE filme_recomendacao (
+    id_filme INT NOT NULL,
+    id_recomendacao INT NOT NULL,
+    PRIMARY KEY (id_filme, id_recomendacao),
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_recomendacao) REFERENCES recomendacao(id_recomendacao) ON DELETE CASCADE
 );
