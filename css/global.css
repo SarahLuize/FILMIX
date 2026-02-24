@@ -88,6 +88,17 @@ body {
     height: 45px;
 }
 
+.FILMIX-logo {
+    width: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.FILMIX-logo img {
+    display: block;
+    height: 45px;
+}
+
 /* BARRA DE NAVEGAÇÃO/NAVBAR E BUSCA */
 .nav-links {
     display: flex;

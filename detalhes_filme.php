@@ -51,7 +51,7 @@ $classificacao = obterClassificacaoFilme($filme);
 
                 <div class="nav-links">
                     <a href="#">Assistir mais Tarde</a>
-                    <a href="#">Favoritos</a>
+                    <a href="Favoritos.php">Favoritos</a>
                     <a href="#">Gêneros</a>
                     
                     <div class="dropdown">
