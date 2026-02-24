@@ -1,0 +1,252 @@
+body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+}
+
+.header {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
+}
+
+.logo-placeholder {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+/* ------------------ */
+/* BARRA DE PESQUISA */
+.search-input {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #444;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-btn {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #444;
+}
+
+/* CORES DOS LINKS DA BARRA DE NAVEGAÇÃO*/
+/* Cor do texto */
+.nav-links a {
+    color: #fff;
+}
+
+/* Cor do link quando passa o mouse por cima*/
+.nav-links a:hover {
+    color: #ccc;
+}
+
+/*FOOTER*/
+.footer {
+    background-color: #1a1a1a;
+}
+
+.footer-disclaimer {
+    color: #ccc;
+}
+
+.user-icon {
+    background-color: #2a2a2a;
+}
+
+/*CSS DOS FILMES*/
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px 40px;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    display: inline-block;
+}
+
+.lancamentos-container {
+    position: relative;
+    padding: 0 60px;
+    margin-bottom: 50px;
+}
+
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.carousel-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.carousel-items {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex: 1;
+}
+
+.carousel-items::-webkit-scrollbar {
+    display: none;
+}
+
+.movie-poster {
+    min-width: 200px;
+    height: 300px;
+    background-color: #2a2a2a;
+    border: 2px dashed #555;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.movie-poster:hover {
+    transform: scale(1.05);
+}
+
+a .movie-poster {
+    text-decoration: none;
+}
+
+.movie-poster.featured {
+    min-width: 250px;
+    height: 350px;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.recomendados-container {
+    position: relative;
+    padding: 0 60px;
+    margin-bottom: 50px;
+}
+
+.movies-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    flex: 1;
+    scroll-behavior: smooth;
+}
+
+.movies-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.movie-card {
+    min-width: 180px;
+    text-align: center;
+}
+
+a .movie-card {
+    text-decoration: none;
+}
+
+a .movie-card-title {
+    color: #fff;
+}
+
+.movie-card-image {
+    width: 100%;
+    height: 250px;
+    background-color: #2a2a2a;
+    border: 2px dashed #555;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.movie-card-image:hover {
+    transform: scale(1.05);
+}
+
+.movie-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.movie-card-title {
+    font-size: 14px;
+    color: #fff;
+    margin-top: 8px;
+}
+
+.populares-container {
+    padding: 0 40px 40px;
+}
+
+.populares-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+@media (max-width: 1400px) {
+    .populares-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .populares-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .populares-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .populares-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.populares-grid .movie-card {
+    min-width: auto;
+    width: 100%;
+}
+
+.user-icon {
+    position: relative;
+}

@@ -1,0 +1,159 @@
+/*
+  ESTILOS GLOBAIS
+  1. Componentes (Buttons, Icons)
+  2. Layout (Header, Footer)
+  3. Formulários (Inputs, Labels)
+  4. Classes Utilitárias (Logos, Alerts)
+*/
+
+body {
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* COMPONENTES (Elementos reutilizáveis: botões, ícones, alertas) */
+.btn-entrar,
+.btn-cadastrar {
+    border: none;
+    padding: 10px 40px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.btn-entrar:hover,
+.btn-cadastrar:hover {
+    background-color: #5a6268;
+    color: #fff;
+}
+
+.user-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/*       ALERTAS        */
+.alert-erro,
+.alert-sucesso {
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* LAYOUT (Header, footer e logo TMDB no footer) */
+.header {
+    padding: 20px 40px;
+}
+
+.footer {
+    padding: 30px 40px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-disclaimer {
+    font-size: 12px;
+    flex: 1;
+    margin-left: 20px;
+}
+
+.TMDB-logo {
+    width: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.TMDB-logo img {
+    display: block;
+    height: 45px;
+}
+
+/* BARRA DE NAVEGAÇÃO/NAVBAR E BUSCA */
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-input {
+    padding: 8px 15px;
+    border-radius: 4px;
+    flex: 1;
+    border: 1px solid;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.search-btn {
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* LOGOS E FORMULÁRIOS*/
+.logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+}
+/* Tamanho das logos placeholder*/
+.logo-grande {
+    width: 150px;
+    height: 80px;
+}
+
+.logo-pequena {
+    width: 120px;
+    height: 60px;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
