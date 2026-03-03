@@ -36,8 +36,6 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
         .logo-placeholder {
             width: 120px;
             height: 60px;
-            background-color: #2a2a2a;
-            border: 2px dashed #555;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -299,7 +297,7 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="logo-placeholder logo-pequena">
-                    <a href="TelaPrincipal.php" style="text-decoration: none; color: #999; font-size: 12px;">Logo</a>
+                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
                 </div>
 
                 <div class="search-container">
@@ -312,8 +310,8 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                 </div>
 
                 <div class="nav-links">
-                    <a href="#">Assistir mais Tarde</a>
-                    <a href="#">Favoritos</a>
+                    <a href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                    <a href="favoritos.php">Favoritos</a>
                     <a href="#">Gêneros</a>
 
                     <div class="dropdown">

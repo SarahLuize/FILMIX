@@ -23,9 +23,9 @@ $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cad
 unset($_SESSION['erro_login']);
 unset($_SESSION['sucesso_cadastro']);
 ?>
-    <div class="logo-placeholder logo-grande">
-        <span style="color: #999;">Logo</span>
-    </div>
+   <div class="logo-placeholder logo-pequena">
+                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+                </div>
 
     <div class="banner-placeholder">
         <span style="color: #999;">Banner</span>
@@ -57,7 +57,7 @@ unset($_SESSION['sucesso_cadastro']);
         </form>
 
         <div class="criar-conta-link">
-            <a href="#">Esqueci minha senha</a>
+            <a href="EsqueceuSenha.php">Esqueci minha senha</a>
             <p class="mb-0">Ainda não tem conta ? <a href="cadastro.php">Criar Conta</a></p>
         </div>
     </div>

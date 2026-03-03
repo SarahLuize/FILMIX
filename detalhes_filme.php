@@ -1,5 +1,7 @@
 <?php
+session_start();
 require_once 'api_tmdb.php';
+require_once 'db_funcoes.php';
 
 $filmeId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -19,6 +21,13 @@ $urlPoster = obterUrlImagem($filme['poster_path']);
 $titulo = htmlspecialchars($filme['title']);
 $sinopse = htmlspecialchars($filme['overview']);
 $classificacao = obterClassificacaoFilme($filme);
+
+$estaFavorito = false;
+$estaAssistirMaisTarde = false;
+if (isset($_SESSION['id_usuario'])) {
+    $estaFavorito = ehFavorito((int) $_SESSION['id_usuario'], $filmeId);
+    $estaAssistirMaisTarde = ehAssistirMaisTarde((int) $_SESSION['id_usuario'], $filmeId);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -36,10 +45,9 @@ $classificacao = obterClassificacaoFilme($filme);
     <header class="header">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between">
-                <div class="logo-placeholder logo-pequena">
-                    <span style="color: #999; font-size: 12px;">Logo</span>
+            <div class="logo-placeholder logo-pequena">
+                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
                 </div>
-
                 <div class="search-container">
                     <form action="BarraPesquisaFilme.php" method="post" class="d-flex w-100">
                         <input type="search" name="s" id="PesquisaFilme" class="search-input" placeholder="Pesquise seu filme">
@@ -50,8 +58,8 @@ $classificacao = obterClassificacaoFilme($filme);
                 </div>
 
                 <div class="nav-links">
-                    <a href="#">Assistir mais Tarde</a>
-                    <a href="Favoritos.php">Favoritos</a>
+                    <a href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                    <a href="favoritos.php">Favoritos</a>
                     <a href="#">Gêneros</a>
                     
                     <div class="dropdown">
@@ -86,12 +94,12 @@ $classificacao = obterClassificacaoFilme($filme);
                     <?php endif; ?>
                 </div>
                 <div class="poster-actions">
-                    <div class="poster-action-icon">
-                        <i class="bi bi-star"></i>
-                    </div>
-                    <div class="poster-action-icon">
-                        <i class="bi bi-clock"></i>
-                    </div>
+                    <button type="button" class="poster-action-icon poster-action-btn js-favorito" data-id-tmdb="<?php echo $filmeId; ?>" title="<?php echo $estaFavorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'; ?>" aria-label="Favoritar">
+                        <i class="bi bi-star<?php echo $estaFavorito ? '-fill' : ''; ?>"></i>
+                    </button>
+                    <button type="button" class="poster-action-icon poster-action-btn js-assistir-mais-tarde" data-id-tmdb="<?php echo $filmeId; ?>" title="<?php echo $estaAssistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde'; ?>" aria-label="Assistir mais Tarde">
+                        <i class="bi bi-clock<?php echo $estaAssistirMaisTarde ? '-fill' : ''; ?>"></i>
+                    </button>
                 </div>
             </div>
 
@@ -122,6 +130,45 @@ $classificacao = obterClassificacaoFilme($filme);
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function() {
+        var logado = <?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>;
+        var btnFav = document.querySelector('.js-favorito');
+        if (btnFav && logado) {
+            var icon = btnFav.querySelector('i');
+            btnFav.addEventListener('click', function() {
+                var idTmdb = this.getAttribute('data-id-tmdb');
+                var fd = new FormData();
+                fd.append('id_tmdb', idTmdb);
+                fd.append('acao', icon.classList.contains('bi-star-fill') ? 'remover' : 'adicionar');
+                fetch('api_favorito.php', { method: 'POST', body: fd }).then(function(r) { return r.json(); }).then(function(res) {
+                    if (res.sucesso) {
+                        icon.classList.toggle('bi-star-fill', res.favorito);
+                        icon.classList.toggle('bi-star', !res.favorito);
+                        btnFav.setAttribute('title', res.favorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos');
+                    }
+                });
+            });
+        }
+        var btnClock = document.querySelector('.js-assistir-mais-tarde');
+        if (btnClock && logado) {
+            var iconClock = btnClock.querySelector('i');
+            btnClock.addEventListener('click', function() {
+                var idTmdb = this.getAttribute('data-id-tmdb');
+                var fd = new FormData();
+                fd.append('id_tmdb', idTmdb);
+                fd.append('acao', iconClock.classList.contains('bi-clock-fill') ? 'remover' : 'adicionar');
+                fetch('api_assistir_mais_tarde.php', { method: 'POST', body: fd }).then(function(r) { return r.json(); }).then(function(res) {
+                    if (res.sucesso) {
+                        iconClock.classList.toggle('bi-clock-fill', res.assistirMaisTarde);
+                        iconClock.classList.toggle('bi-clock', !res.assistirMaisTarde);
+                        btnClock.setAttribute('title', res.assistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde');
+                    }
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html>
 

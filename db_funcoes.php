@@ -114,7 +114,7 @@ function buscarFilmePorIdTmdb($idTmdb) {
     return $filme;
 }
 
-function buscarFilmePorId($idFilme) {
+function buscarFilmePorIdFilme($idFilme) {
     $conn = obterConexao();
     
     $query = "SELECT id_filme, id_tmdb, titulo, idioma_original, popularidade, media_avaliacao, poster_url, data_lancamento, sinopse 
@@ -255,5 +255,139 @@ function deletarRecomendacao($idRecomendacao) {
     $erro = mysqli_error($conn);
     mysqli_stmt_close($stmt);
     return ['sucesso' => false, 'erro' => $erro];
+}
+
+function ehFavorito($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "SELECT 1 FROM usuario_favorito WHERE id_usuario = ? AND id_tmdb = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+    $existe = mysqli_fetch_assoc($resultado) !== null;
+    mysqli_stmt_close($stmt);
+    return $existe;
+}
+
+function inserirFavorito($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "INSERT IGNORE INTO usuario_favorito (id_usuario, id_tmdb) VALUES (?, ?)";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['sucesso' => false, 'erro' => 'Erro ao preparar consulta'];
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        return ['sucesso' => true];
+    }
+    $erro = mysqli_error($conn);
+    mysqli_stmt_close($stmt);
+    return ['sucesso' => false, 'erro' => $erro];
+}
+
+function removerFavorito($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "DELETE FROM usuario_favorito WHERE id_usuario = ? AND id_tmdb = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['sucesso' => false, 'erro' => 'Erro ao preparar consulta'];
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        return ['sucesso' => true];
+    }
+    $erro = mysqli_error($conn);
+    mysqli_stmt_close($stmt);
+    return ['sucesso' => false, 'erro' => $erro];
+}
+
+function listarIdsFavoritosPorUsuario($idUsuario) {
+    $conn = obterConexao();
+    $query = "SELECT id_tmdb FROM usuario_favorito WHERE id_usuario = ? ORDER BY data_adicionado DESC";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return [];
+    }
+    mysqli_stmt_bind_param($stmt, 'i', $idUsuario);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+    $ids = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $ids[] = (int) $row['id_tmdb'];
+    }
+    mysqli_stmt_close($stmt);
+    return $ids;
+}
+
+function ehAssistirMaisTarde($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "SELECT 1 FROM usuario_assistir_mais_tarde WHERE id_usuario = ? AND id_tmdb = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+    $existe = mysqli_fetch_assoc($resultado) !== null;
+    mysqli_stmt_close($stmt);
+    return $existe;
+}
+
+function inserirAssistirMaisTarde($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "INSERT IGNORE INTO usuario_assistir_mais_tarde (id_usuario, id_tmdb) VALUES (?, ?)";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['sucesso' => false, 'erro' => 'Erro ao preparar consulta'];
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        return ['sucesso' => true];
+    }
+    $erro = mysqli_error($conn);
+    mysqli_stmt_close($stmt);
+    return ['sucesso' => false, 'erro' => $erro];
+}
+
+function removerAssistirMaisTarde($idUsuario, $idTmdb) {
+    $conn = obterConexao();
+    $query = "DELETE FROM usuario_assistir_mais_tarde WHERE id_usuario = ? AND id_tmdb = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['sucesso' => false, 'erro' => 'Erro ao preparar consulta'];
+    }
+    mysqli_stmt_bind_param($stmt, 'ii', $idUsuario, $idTmdb);
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        return ['sucesso' => true];
+    }
+    $erro = mysqli_error($conn);
+    mysqli_stmt_close($stmt);
+    return ['sucesso' => false, 'erro' => $erro];
+}
+
+function listarIdsAssistirMaisTardePorUsuario($idUsuario) {
+    $conn = obterConexao();
+    $query = "SELECT id_tmdb FROM usuario_assistir_mais_tarde WHERE id_usuario = ? ORDER BY data_adicionado DESC";
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return [];
+    }
+    mysqli_stmt_bind_param($stmt, 'i', $idUsuario);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+    $ids = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $ids[] = (int) $row['id_tmdb'];
+    }
+    mysqli_stmt_close($stmt);
+    return $ids;
 }
 

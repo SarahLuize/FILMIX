@@ -141,6 +141,15 @@ body {
     color: #333;
 }
 
+.poster-action-btn {
+    background: transparent;
+    padding: 0;
+}
+
+.poster-action-btn:hover {
+    background-color: #f0f0f0;
+}
+
 .filme-info {
     flex: 1;
 }

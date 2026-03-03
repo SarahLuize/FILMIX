@@ -17,9 +17,9 @@ $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cad
 unset($_SESSION['erro_cadastro']);
 unset($_SESSION['sucesso_cadastro']);
 ?>
-    <div class="logo-placeholder logo-grande placeholder-box">
-        <span style="color: #999;">Logo</span>
-    </div>
+   <div class="logo-placeholder logo-pequena">
+                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+                </div>
 
     <div class="banner-placeholder placeholder-box">
         <span style="color: #999;">Banner</span>

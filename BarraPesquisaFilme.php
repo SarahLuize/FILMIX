@@ -229,8 +229,8 @@ if (!empty($termoPesquisa)) {
     <header class="header">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between">
-                <div class="logo-placeholder">
-                    <a href="TelaPrincipal.php" style="text-decoration: none; color: #999; font-size: 12px;">Logo</a>
+            <div class="logo-placeholder logo-pequena">
+                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
                 </div>
 
                 <div class="search-container">

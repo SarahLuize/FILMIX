@@ -10,10 +10,10 @@ require_once 'db_funcoes.php';
 require_once 'api_tmdb.php';
 
 $idUsuario = (int) $_SESSION['id_usuario'];
-$idsFavoritos = listarIdsFavoritosPorUsuario($idUsuario);
+$idsLista = listarIdsAssistirMaisTardePorUsuario($idUsuario);
 $filmes = [];
 
-foreach ($idsFavoritos as $idTmdb) {
+foreach ($idsLista as $idTmdb) {
     $dados = buscarFilmePorId($idTmdb);
     if (!isset($dados['erro'])) {
         $filmes[] = [
@@ -29,27 +29,27 @@ foreach ($idsFavoritos as $idTmdb) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIX | Favoritos</title>
+    <title>FILMIX | Assistir mais Tarde</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
     <style>
-        .favoritos-title { font-size: 28px; font-weight: bold; margin-bottom: 24px; color: #333; }
-        .favoritos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; }
-        .favoritos-card { text-align: center; }
-        .favoritos-card a { text-decoration: none; color: #333; }
-        .favoritos-poster { width: 100%; aspect-ratio: 2/3; background: #e0e0e0; border-radius: 8px; overflow: hidden; border: 2px solid #ddd; }
-        .favoritos-poster img { width: 100%; height: 100%; object-fit: cover; }
-        .favoritos-card-titulo { margin-top: 10px; font-size: 14px; font-weight: 500; }
-        .favoritos-vazio { color: #666; font-size: 16px; padding: 40px 0; }
+        .lista-title { font-size: 28px; font-weight: bold; margin-bottom: 24px; color: #333; }
+        .lista-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; }
+        .lista-card { text-align: center; }
+        .lista-card a { text-decoration: none; color: #333; }
+        .lista-poster { width: 100%; aspect-ratio: 2/3; background: #e0e0e0; border-radius: 8px; overflow: hidden; border: 2px solid #ddd; }
+        .lista-poster img { width: 100%; height: 100%; object-fit: cover; }
+        .lista-card-titulo { margin-top: 10px; font-size: 14px; font-weight: 500; }
+        .lista-vazio { color: #666; font-size: 16px; padding: 40px 0; }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between">
-                <div class="logo-placeholder logo-pequena">
+            <div class="logo-placeholder logo-pequena">
                     <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
                 </div>
                 <div class="search-container">
@@ -81,26 +81,26 @@ foreach ($idsFavoritos as $idTmdb) {
     </header>
 
     <main class="main-content">
-        <h1 class="favoritos-title">Meus Favoritos</h1>
+        <h1 class="lista-title">Assistir mais Tarde</h1>
         <?php if (empty($filmes)): ?>
-            <p class="favoritos-vazio">Você ainda não adicionou nenhum filme aos favoritos. Clique na estrela na página de um filme para adicionar.</p>
+            <p class="lista-vazio">Você ainda não adicionou nenhum filme. Clique no ícone de relógio na página de um filme para adicionar.</p>
         <?php else: ?>
-            <div class="favoritos-grid">
+            <div class="lista-grid">
                 <?php foreach ($filmes as $f): ?>
                     <?php
                     $urlPoster = obterUrlImagem($f['poster_path']);
                     $titulo = htmlspecialchars($f['title']);
                     ?>
-                    <div class="favoritos-card">
+                    <div class="lista-card">
                         <a href="detalhes_filme.php?id=<?php echo $f['id']; ?>">
-                            <div class="favoritos-poster">
+                            <div class="lista-poster">
                                 <?php if (!empty($urlPoster)): ?>
                                     <img src="<?php echo $urlPoster; ?>" alt="<?php echo $titulo; ?>" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#999;font-size:12px;\'>Sem imagem</span>'">
                                 <?php else: ?>
                                     <span style="color:#999;font-size:12px;">Sem imagem</span>
                                 <?php endif; ?>
                             </div>
-                            <div class="favoritos-card-titulo"><?php echo $titulo; ?></div>
+                            <div class="lista-card-titulo"><?php echo $titulo; ?></div>
                         </a>
                     </div>
                 <?php endforeach; ?>
