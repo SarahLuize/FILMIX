@@ -43,3 +43,19 @@ CREATE TABLE filme_recomendacao (
     FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
     FOREIGN KEY (id_recomendacao) REFERENCES recomendacao(id_recomendacao) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS usuario_assistir_mais_tarde (
+    id_usuario INT NOT NULL,
+    id_tmdb INT NOT NULL,
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_usuario, id_tmdb),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS usuario_favorito (
+    id_usuario INT NOT NULL,
+    id_tmdb INT NOT NULL,
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_usuario, id_tmdb),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
