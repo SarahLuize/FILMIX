@@ -18,11 +18,13 @@ unset($_SESSION['erro_cadastro']);
 unset($_SESSION['sucesso_cadastro']);
 ?>
    <div class="logo-placeholder logo-pequena">
-                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
-                </div>
+        <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+    </div>
 
     <div class="banner-placeholder placeholder-box">
-        <span style="color: #999;">Banner</span>
+        <div class="logos-img">
+        <img src="img/logo-cadastro.png" alt="Logotipo CADASTRO" class="logo-cadastro">
+        </div>
     </div>
 
     <div class="cadastro-container">

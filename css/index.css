@@ -4,7 +4,6 @@ body {
 }
 
 .logo-placeholder {
-    background-color: #f0f0f0;
     margin: 20px 0 0 20px;
 }
 
@@ -14,13 +13,14 @@ body {
     width: 100%;
     max-width: 600px;
     height: 300px;
-    background-color: #f0f0f0;
+    background-color: #c5c5c5;
     border: 2px dashed #ccc;
     margin: 40px auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 /*--------------------------------------- */
 /*       CONTAINER DO FORM NO INDEX       */

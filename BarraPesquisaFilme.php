@@ -44,8 +44,7 @@ if (!empty($termoPesquisa)) {
         .logo-placeholder {
             width: 120px;
             height: 60px;
-            background-color: #2a2a2a;
-            border: 2px dashed #555;
+            background-color: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;

@@ -129,6 +129,25 @@ body {
 }
 
 /* LOGOS E FORMULÁRIOS*/
+
+.banner-container-logos {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    border: 2px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*background-color: #d3d3d3;*/
+}
+
+.logos-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .logo-placeholder {
     display: flex;
     align-items: center;
@@ -138,6 +157,18 @@ body {
 .logo-grande {
     width: 150px;
     height: 80px;
+}
+
+.logo-login {
+    width: 100%;
+    max-width: 600px;
+    height: 500px;
+}
+
+.logo-cadastro {
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
 }
 
 .logo-pequena {

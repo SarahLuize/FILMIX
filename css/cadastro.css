@@ -12,8 +12,6 @@ body {
 /* Para organizar o banner-placeholder*/
 
 .placeholder-box {
-    background-color: #f0f0f0;
-    border: 2px dashed #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +19,7 @@ body {
 
 .banner-placeholder {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     height: 200px;
     margin: 40px auto 30px;
 }
