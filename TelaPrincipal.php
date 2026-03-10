@@ -161,7 +161,9 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
             flex-shrink: 0;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s;
+            /* transition: transform 0.3s; */
+            transform: scale(0.9);
+            transition: transform 0.35s ease, opacity 0.35s ease;
         }
 
         .movie-poster:hover {
@@ -175,6 +177,7 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
         .movie-poster.featured {
             min-width: 250px;
             height: 350px;
+            transform: scale(1.0);
         }
 
         .movie-poster img {
@@ -345,7 +348,8 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                     if (isset($lancamentos['results']) && !empty($lancamentos['results'])) {
                         $filmesLancamentos = array_slice($lancamentos['results'], 0, 10);
                         foreach ($filmesLancamentos as $index => $filme) {
-                            $classePoster = ($index === 1) ? 'movie-poster featured' : 'movie-poster';
+                            // $classePoster = ($index === 1) ? 'movie-poster featured' : 'movie-poster';
+                            $classePoster = 'movie-poster';
                             $urlImagem = obterUrlImagem($filme['poster_path']);
                             $titulo = htmlspecialchars($filme['title']);
                             $filmeId = intval($filme['id']);
@@ -479,6 +483,7 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                     behavior: 'smooth'
                 });
             }
+            setTimeout(updateFeatured, 350);
         }
 
         function scrollCarouselRecomendados(direction) {
@@ -495,6 +500,21 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                     left: scrollAmount,
                     behavior: 'smooth'
                 });
+            }
+        }
+
+        function updateFeatured(){
+            const posters = document.querySelectorAll('#carouselLancamentos .movie-poster');
+
+            posters.forEach(poster => poster.classList.remove('featured'));
+            const carousel = document.getElementById('carouselLancamentos');
+            const scrollLeft = carousel.scrollLeft;
+
+            const itemWidth = posters[0].offsetWidth + 10;
+            const index = Math.round (scrollLeft / itemWidth) +1;
+            
+            if(posters [index]) {
+                posters[index].classList.add('featured');
             }
         }
     </script>
