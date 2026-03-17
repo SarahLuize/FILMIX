@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIX | Cadastro</title>
+    <title>FILMIX | Esqueci minha senha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/cadastro.css">
@@ -17,15 +17,13 @@ $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cad
 unset($_SESSION['erro_cadastro']);
 unset($_SESSION['sucesso_cadastro']);
 ?>
-    <div class="mb-3">
-        <div class="logo-placeholder logo-pequena">
-            <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
-        </div>
+   <div class="logo-placeholder logo-pequena">
+        <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+    </div>
 
-        <div class="banner-container-logos">
-            <div class="logos-img">
-                <img src="img/logo-cadastro.png" alt="Logotipo CADASTRO" class="logo-cadastro">
-            </div>
+    <div class="banner-placeholder placeholder-box">
+        <div class="logos-img">
+        <img src="img/logo-cadastro.png" alt="Logotipo CADASTRO" class="logo-cadastro">
         </div>
     </div>
 
