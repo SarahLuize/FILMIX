@@ -3,10 +3,15 @@ body {
     position: relative;
 }
 
-.logo-placeholder {
+/* .logo-placeholder {
     position: absolute;
     top: 20px;
     left: 20px;
+} */
+
+
+.logo-placeholder {
+    margin: 20px 0 0 20px;
 }
 
 /* Para organizar o banner-placeholder*/

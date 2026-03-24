@@ -17,18 +17,21 @@ $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cad
 unset($_SESSION['erro_cadastro']);
 unset($_SESSION['sucesso_cadastro']);
 ?>
-    <div class="logo-placeholder logo-pequena">
-        <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
-    </div>
+    <div class="mt-5 margem-t">
+        <div class="logo-placeholder logo-pequena">
+            <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
+        </div>
 
-    <div class="banner-placeholder placeholder-box">
-        <div class="logos-img">
-            <span>Esqueci minha senha</span>
+        <div class="banner-placeholder placeholder-box pt-xxl-5">
+            <div class="logos-img mt-xxl-5">
+                <img src="img/esqueci-senha-logo.png" alt="ESQUECI MINHA SENHA logo" class="logo-login mt-xxl-5">
+            </div>
         </div>
     </div>
 
+    <br><br><br><br>
     <h4 style="text-align: center;">Por favor, confirme o email fornecido no cadastro</h4>
-
+    <br><br>
     <div class="cadastro-container">
         <?php if (!empty($erroCadastro)): ?>
             <div class="alert-erro">
@@ -50,8 +53,9 @@ unset($_SESSION['sucesso_cadastro']);
             </div>
         </form>
     </div>
+    <br><br>
 
-    <div class="footer">
+    <div class="footer mt-xxl-5">
         <div class="TMDB-logo">
             <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
         </div> 

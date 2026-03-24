@@ -187,3 +187,15 @@ body {
     padding: 10px;
     margin-bottom: 20px;
 }
+
+/* MARGEM */
+
+.margem-t {
+    margin-top: 30px;
+}
+
+.teste{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
