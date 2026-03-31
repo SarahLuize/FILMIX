@@ -31,6 +31,7 @@ if (isset($_SESSION['id_usuario'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,56 +40,87 @@ if (isset($_SESSION['id_usuario'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
-    
+
 </head>
+
+<style>
+    /* Tamanho para Telas Pequenas (Celular) */
+    .logo-filmix {
+        height: 100px;
+        width: auto;
+        transition: height 0.3s ease;
+    }
+
+    /* Tamanho para Telas Grandes (Computador - Desktop) */
+    @media (min-width: 992px) {
+        .logo-filmix {
+            height: 150px;
+        }
+    }
+</style>
+
 <body>
     <header class="header">
-        <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-between">
-            <div class="logo-placeholder logo-pequena">
-                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
-                </div>
-                <div class="search-container">
-                    <form action="BarraPesquisaFilme.php" method="post" class="d-flex w-100">
-                        <input type="search" name="s" id="PesquisaFilme" class="search-input" placeholder="Pesquise seu filme">
-                        <button type="submit" class="search-btn">
-                            <i class="bi bi-search"></i>
-                        </button>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="TelaPrincipal.php">
+                    <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navFilmix">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navFilmix">
+
+                    <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
+                        <div class="input-group">
+                            <input type="search" name="s" class="search-input" placeholder="Pesquise seu filme...">
+                            <button type="submit" class="search-btn">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
                     </form>
-                </div>
 
-                <div class="nav-links">
-                    <a href="assistir_mais_tarde.php">Assistir mais Tarde</a>
-                    <a href="favoritos.php">Favoritos</a>
-                    <a href="#">Gêneros</a>
-                    
-                    <div class="dropdown">
-                        <a href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration:none;">
-                            <i class="bi bi-person" style="font-size:1.5rem; color:#2e2e2e;"></i>
-                        </a>
+                    <ul class="navbar-nav ms-auto align-items-left">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-black" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-black" href="favoritos.php">Favoritos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-black" href="#">Gêneros</a>
+                        </li>
 
-                        <ul class="dropdown-menu dropdown-menu-end" style="background-color:#fff;">
-                            <li>
-                                <span class="dropdown-item-text text-custom-dark px-3 py-2 d-block">
-                                    <?php
-                                    echo isset($_SESSION['nome_usuario'])
-                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
-                                        : 'Visitante';
-                                    ?>
-                                </span>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="logout.php" method="POST">
-                                    <button type="submit" class="dropdown-item text-custom-dark">Desconectar</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                        <li class="nav-item dropdown ms-lg-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #000;"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+                                <li>
+                                    <span class="dropdown-item-text text-white px-3 py-2 d-block">
+                                        <?php
+                                        echo isset($_SESSION['nome_usuario'])
+                                            ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
+                                        ?>
+                                    </span>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="logout.php" method="POST" class="m-0 px-3">
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <main class="main-content">
@@ -97,7 +129,7 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="poster-placeholder">
                     <?php if (!empty($urlPoster)): ?>
                         <img src="<?php echo $urlPoster; ?>" alt="<?php echo $titulo; ?>"
-                             onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: #999;\'>Sem imagem</span>'">
+                            onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: #999;\'>Sem imagem</span>'">
                     <?php else: ?>
                         <span style="color: #999;">Sem imagem</span>
                     <?php endif; ?>
@@ -114,7 +146,7 @@ if (isset($_SESSION['id_usuario'])) {
 
             <div class="filme-info">
                 <h1 class="filme-titulo"><?php echo $titulo; ?></h1>
-                
+
                 <p class="filme-sinopse">
                     <?php echo !empty($sinopse) ? $sinopse : 'Sinopse não disponível.'; ?>
                 </p>
@@ -128,7 +160,7 @@ if (isset($_SESSION['id_usuario'])) {
     <footer class="footer">
         <div class="TMDB-logo">
             <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
-        </div> 
+        </div>
         <div class="footer-disclaimer">
             <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
         </div>
@@ -140,70 +172,80 @@ if (isset($_SESSION['id_usuario'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    (function() {
-        var logado = <?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>;
-        var btnFav = document.querySelector('.js-favorito');
-        var btnClock = document.querySelector('.js-assistir-mais-tarde');
+        (function() {
+            var logado = <?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>;
+            var btnFav = document.querySelector('.js-favorito');
+            var btnClock = document.querySelector('.js-assistir-mais-tarde');
 
-        function getRedirectUrl() {
-            return 'login.php?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
-        }
-
-        if (btnFav) {
-            var icon = btnFav.querySelector('i');
-            if (logado) {
-                btnFav.addEventListener('click', function() {
-                    var idTmdb = this.getAttribute('data-id-tmdb');
-                    var fd = new FormData();
-                    fd.append('id_tmdb', idTmdb);
-                    fd.append('acao', icon.classList.contains('bi-star-fill') ? 'remover' : 'adicionar');
-                    fetch('api_favorito.php', { method: 'POST', body: fd })
-                        .then(function(r) { return r.json(); })
-                        .then(function(res) {
-                            if (res.sucesso) {
-                                icon.classList.toggle('bi-star-fill', res.favorito);
-                                icon.classList.toggle('bi-star', !res.favorito);
-                                btnFav.setAttribute('title', res.favorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos');
-                            } else if (res.erro === 'Não autenticado') {
-                                window.location.href = getRedirectUrl();
-                            }
-                        });
-                });
-            } else {
-                btnFav.addEventListener('click', function() {
-                    window.location.href = getRedirectUrl();
-                });
+            function getRedirectUrl() {
+                return 'login.php?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
             }
-        }
 
-        if (btnClock) {
-            var iconClock = btnClock.querySelector('i');
-            if (logado) {
-                btnClock.addEventListener('click', function() {
-                    var idTmdb = this.getAttribute('data-id-tmdb');
-                    var fd = new FormData();
-                    fd.append('id_tmdb', idTmdb);
-                    fd.append('acao', iconClock.classList.contains('bi-clock-fill') ? 'remover' : 'adicionar');
-                    fetch('api_assistir_mais_tarde.php', { method: 'POST', body: fd })
-                        .then(function(r) { return r.json(); })
-                        .then(function(res) {
-                            if (res.sucesso) {
-                                iconClock.classList.toggle('bi-clock-fill', res.assistirMaisTarde);
-                                iconClock.classList.toggle('bi-clock', !res.assistirMaisTarde);
-                                btnClock.setAttribute('title', res.assistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde');
-                            } else if (res.erro === 'Não autenticado') {
-                                window.location.href = getRedirectUrl();
-                            }
-                        });
-                });
-            } else {
-                btnClock.addEventListener('click', function() {
-                    window.location.href = getRedirectUrl();
-                });
+            if (btnFav) {
+                var icon = btnFav.querySelector('i');
+                if (logado) {
+                    btnFav.addEventListener('click', function() {
+                        var idTmdb = this.getAttribute('data-id-tmdb');
+                        var fd = new FormData();
+                        fd.append('id_tmdb', idTmdb);
+                        fd.append('acao', icon.classList.contains('bi-star-fill') ? 'remover' : 'adicionar');
+                        fetch('api_favorito.php', {
+                                method: 'POST',
+                                body: fd
+                            })
+                            .then(function(r) {
+                                return r.json();
+                            })
+                            .then(function(res) {
+                                if (res.sucesso) {
+                                    icon.classList.toggle('bi-star-fill', res.favorito);
+                                    icon.classList.toggle('bi-star', !res.favorito);
+                                    btnFav.setAttribute('title', res.favorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos');
+                                } else if (res.erro === 'Não autenticado') {
+                                    window.location.href = getRedirectUrl();
+                                }
+                            });
+                    });
+                } else {
+                    btnFav.addEventListener('click', function() {
+                        window.location.href = getRedirectUrl();
+                    });
+                }
             }
-        }
-    })();
+
+            if (btnClock) {
+                var iconClock = btnClock.querySelector('i');
+                if (logado) {
+                    btnClock.addEventListener('click', function() {
+                        var idTmdb = this.getAttribute('data-id-tmdb');
+                        var fd = new FormData();
+                        fd.append('id_tmdb', idTmdb);
+                        fd.append('acao', iconClock.classList.contains('bi-clock-fill') ? 'remover' : 'adicionar');
+                        fetch('api_assistir_mais_tarde.php', {
+                                method: 'POST',
+                                body: fd
+                            })
+                            .then(function(r) {
+                                return r.json();
+                            })
+                            .then(function(res) {
+                                if (res.sucesso) {
+                                    iconClock.classList.toggle('bi-clock-fill', res.assistirMaisTarde);
+                                    iconClock.classList.toggle('bi-clock', !res.assistirMaisTarde);
+                                    btnClock.setAttribute('title', res.assistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde');
+                                } else if (res.erro === 'Não autenticado') {
+                                    window.location.href = getRedirectUrl();
+                                }
+                            });
+                    });
+                } else {
+                    btnClock.addEventListener('click', function() {
+                        window.location.href = getRedirectUrl();
+                    });
+                }
+            }
+        })();
     </script>
 </body>
-</html>
 
+</html>

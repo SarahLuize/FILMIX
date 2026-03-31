@@ -105,6 +105,24 @@ $urlPaginaPopulares = function (int $p): string {
             cursor: pointer;
         }
 
+        .navbar {
+            background-color: #1a1a1a;
+        }
+
+        /* Tamanho para Telas Pequenas (Celular) */
+        .logo-filmix {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+
+        /* Tamanho para Telas Grandes (Computador - Desktop) */
+        @media (min-width: 992px) {
+            .logo-filmix {
+                height: 150px;
+            }
+        }
+
         .nav-links {
             display: flex;
             gap: 25px;
@@ -368,54 +386,67 @@ $urlPaginaPopulares = function (int $p): string {
         }
     </style>
 
-    <header class="header">
-        <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="logo-placeholder logo-pequena">
-                    <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
-                </div>
+    <header class="header" style="background-color: #1a1a1a;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
 
-                <div class="search-container">
-                    <form action="BarraPesquisaFilme.php" method="post" class="d-flex w-100">
-                        <input type="search" name="s" id="PesquisaFilme" class="search-input" placeholder="Pesquise seu filme">
-                        <button type="submit" class="search-btn">
-                            <i class="bi bi-search"></i>
-                        </button>
+                <a class="navbar-brand" href="TelaPrincipal.php">
+                    <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navFilmix">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navFilmix">
+
+                    <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
+                        <div class="input-group">
+                            <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
+                            <button type="submit" class="btn btn-outline-light">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
                     </form>
-                </div>
 
-                <div class="nav-links">
-                    <a href="assistir_mais_tarde.php">Assistir mais Tarde</a>
-                    <a href="favoritos.php">Favoritos</a>
-                    <a href="#">Gêneros</a>
+                    <ul class="navbar-nav ms-auto align-items-left">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="#">Gêneros</a>
+                        </li>
 
-                    <div class="dropdown">
-                        <a href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration:none;">
-                            <i class="bi bi-person" style="font-size:1.5rem; color:#fff;"></i>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end" style="background-color:#222;">
-                            <li>
-                                <span class="dropdown-item-text text-white px-3 py-2 d-block">
-                                    <?php
-                                    echo isset($_SESSION['nome_usuario'])
-                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
-                                        : 'Visitante';
-                                    ?>
-                                </span>
-                            </li>
-                            <li><hr class="dropdown-divider" style="border-color:#444;"></li>
-                            <li>
-                                <form action="logout.php" method="POST">
-                                    <button type="submit" class="dropdown-item text-white">Desconectar</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                        <li class="nav-item dropdown ms-lg-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #fff;"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+                                <li>
+                                    <span class="dropdown-item-text text-white px-3 py-2 d-block">
+                                        <?php
+                                        echo isset($_SESSION['nome_usuario'])
+                                            ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
+                                        ?>
+                                    </span>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="logout.php" method="POST" class="m-0 px-3">
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <main>
@@ -464,20 +495,20 @@ $urlPaginaPopulares = function (int $p): string {
 
 
         <?php if (!empty($recomendados['results'])): ?>
-        <div class="section-title">Recomendados para você</div>
-        <p class="section-subtitle">Com base nos filmes que você favoritou</p>
+            <div class="section-title">Recomendados para você</div>
+            <p class="section-subtitle">Com base nos filmes que você favoritou</p>
 
-        <div class="recomendados-container">
-            <div class="carousel-wrapper">
-                <button class="carousel-btn" onclick="scrollCarouselRecomendados('left')">‹</button>
-                <div class="movies-grid" id="gridRecomendados">
-                    <?php
-                    $filmesRecomendados = array_slice($recomendados['results'], 0, 10);
-                    foreach ($filmesRecomendados as $filme) {
-                        $urlImagem = obterUrlImagem($filme['poster_path']);
-                        $titulo = htmlspecialchars($filme['title']);
-                        $filmeId = intval($filme['id']);
-                    ?>
+            <div class="recomendados-container">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn" onclick="scrollCarouselRecomendados('left')">‹</button>
+                    <div class="movies-grid" id="gridRecomendados">
+                        <?php
+                        $filmesRecomendados = array_slice($recomendados['results'], 0, 10);
+                        foreach ($filmesRecomendados as $filme) {
+                            $urlImagem = obterUrlImagem($filme['poster_path']);
+                            $titulo = htmlspecialchars($filme['title']);
+                            $filmeId = intval($filme['id']);
+                        ?>
                             <a href="detalhes_filme.php?id=<?php echo $filmeId; ?>" style="text-decoration: none;">
                                 <div class="movie-card">
                                     <div class="movie-card-image">
@@ -492,12 +523,12 @@ $urlPaginaPopulares = function (int $p): string {
                                 </div>
                             </a>
                         <?php
-                    }
-                    ?>
+                        }
+                        ?>
+                    </div>
+                    <button class="carousel-btn" onclick="scrollCarouselRecomendados('right')">›</button>
                 </div>
-                <button class="carousel-btn" onclick="scrollCarouselRecomendados('right')">›</button>
             </div>
-        </div>
         <?php endif; ?>
 
         <div class="section-title" id="populares-filmix">Populares do FILMIX</div>
@@ -506,7 +537,7 @@ $urlPaginaPopulares = function (int $p): string {
             <div class="populares-grid" id="gridPopulares">
                 <?php
                 if ($popularesErro !== null) {
-                    ?>
+                ?>
                     <div class="movie-card" style="grid-column: 1 / -1;">
                         <div class="movie-card-image" style="height: auto; min-height: 120px; padding: 1rem;">
                             <span style="color: #999; font-size: 14px;">Não foi possível carregar os populares. Tente novamente.</span>
@@ -518,7 +549,7 @@ $urlPaginaPopulares = function (int $p): string {
                         $urlImagem = obterUrlImagem($filme['poster_path']);
                         $titulo = htmlspecialchars($filme['title']);
                         $filmeId = intval($filme['id']);
-                ?>
+                    ?>
                         <a href="detalhes_filme.php?id=<?php echo $filmeId; ?>" style="text-decoration: none;">
                             <div class="movie-card">
                                 <div class="movie-card-image">
@@ -607,7 +638,7 @@ $urlPaginaPopulares = function (int $p): string {
             }
         }
 
-        function updateFeatured(){
+        function updateFeatured() {
             const posters = document.querySelectorAll('#carouselLancamentos .movie-poster');
 
             posters.forEach(poster => poster.classList.remove('featured'));
@@ -615,9 +646,9 @@ $urlPaginaPopulares = function (int $p): string {
             const scrollLeft = carousel.scrollLeft;
 
             const itemWidth = posters[0].offsetWidth + 10;
-            const index = Math.round (scrollLeft / itemWidth) +1;
-            
-            if(posters [index]) {
+            const index = Math.round(scrollLeft / itemWidth) + 1;
+
+            if (posters[index]) {
                 posters[index].classList.add('featured');
             }
         }
