@@ -68,7 +68,16 @@ if (isset($_SESSION['id_usuario'])) {
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end" style="background-color:#fff;">
-                            <li><a class="dropdown-item text-custom-dark" href="#">Perfil</a></li>
+                            <li>
+                                <span class="dropdown-item-text text-custom-dark px-3 py-2 d-block">
+                                    <?php
+                                    echo isset($_SESSION['nome_usuario'])
+                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
+                                        : 'Visitante';
+                                    ?>
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="logout.php" method="POST">
                                     <button type="submit" class="dropdown-item text-custom-dark">Desconectar</button>
@@ -134,38 +143,64 @@ if (isset($_SESSION['id_usuario'])) {
     (function() {
         var logado = <?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>;
         var btnFav = document.querySelector('.js-favorito');
-        if (btnFav && logado) {
-            var icon = btnFav.querySelector('i');
-            btnFav.addEventListener('click', function() {
-                var idTmdb = this.getAttribute('data-id-tmdb');
-                var fd = new FormData();
-                fd.append('id_tmdb', idTmdb);
-                fd.append('acao', icon.classList.contains('bi-star-fill') ? 'remover' : 'adicionar');
-                fetch('api_favorito.php', { method: 'POST', body: fd }).then(function(r) { return r.json(); }).then(function(res) {
-                    if (res.sucesso) {
-                        icon.classList.toggle('bi-star-fill', res.favorito);
-                        icon.classList.toggle('bi-star', !res.favorito);
-                        btnFav.setAttribute('title', res.favorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos');
-                    }
-                });
-            });
-        }
         var btnClock = document.querySelector('.js-assistir-mais-tarde');
-        if (btnClock && logado) {
-            var iconClock = btnClock.querySelector('i');
-            btnClock.addEventListener('click', function() {
-                var idTmdb = this.getAttribute('data-id-tmdb');
-                var fd = new FormData();
-                fd.append('id_tmdb', idTmdb);
-                fd.append('acao', iconClock.classList.contains('bi-clock-fill') ? 'remover' : 'adicionar');
-                fetch('api_assistir_mais_tarde.php', { method: 'POST', body: fd }).then(function(r) { return r.json(); }).then(function(res) {
-                    if (res.sucesso) {
-                        iconClock.classList.toggle('bi-clock-fill', res.assistirMaisTarde);
-                        iconClock.classList.toggle('bi-clock', !res.assistirMaisTarde);
-                        btnClock.setAttribute('title', res.assistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde');
-                    }
+
+        function getRedirectUrl() {
+            return 'login.php?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+        }
+
+        if (btnFav) {
+            var icon = btnFav.querySelector('i');
+            if (logado) {
+                btnFav.addEventListener('click', function() {
+                    var idTmdb = this.getAttribute('data-id-tmdb');
+                    var fd = new FormData();
+                    fd.append('id_tmdb', idTmdb);
+                    fd.append('acao', icon.classList.contains('bi-star-fill') ? 'remover' : 'adicionar');
+                    fetch('api_favorito.php', { method: 'POST', body: fd })
+                        .then(function(r) { return r.json(); })
+                        .then(function(res) {
+                            if (res.sucesso) {
+                                icon.classList.toggle('bi-star-fill', res.favorito);
+                                icon.classList.toggle('bi-star', !res.favorito);
+                                btnFav.setAttribute('title', res.favorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos');
+                            } else if (res.erro === 'Não autenticado') {
+                                window.location.href = getRedirectUrl();
+                            }
+                        });
                 });
-            });
+            } else {
+                btnFav.addEventListener('click', function() {
+                    window.location.href = getRedirectUrl();
+                });
+            }
+        }
+
+        if (btnClock) {
+            var iconClock = btnClock.querySelector('i');
+            if (logado) {
+                btnClock.addEventListener('click', function() {
+                    var idTmdb = this.getAttribute('data-id-tmdb');
+                    var fd = new FormData();
+                    fd.append('id_tmdb', idTmdb);
+                    fd.append('acao', iconClock.classList.contains('bi-clock-fill') ? 'remover' : 'adicionar');
+                    fetch('api_assistir_mais_tarde.php', { method: 'POST', body: fd })
+                        .then(function(r) { return r.json(); })
+                        .then(function(res) {
+                            if (res.sucesso) {
+                                iconClock.classList.toggle('bi-clock-fill', res.assistirMaisTarde);
+                                iconClock.classList.toggle('bi-clock', !res.assistirMaisTarde);
+                                btnClock.setAttribute('title', res.assistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde');
+                            } else if (res.erro === 'Não autenticado') {
+                                window.location.href = getRedirectUrl();
+                            }
+                        });
+                });
+            } else {
+                btnClock.addEventListener('click', function() {
+                    window.location.href = getRedirectUrl();
+                });
+            }
         }
     })();
     </script>

@@ -24,5 +24,5 @@ $_SESSION['email_usuario'] = $usuario['email'];
 
 unset($_SESSION['erro_recuperacao_senha']);
 
-header('Location: index.php');
+header('Location: login.php');
 exit;

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id_usuario'])) {
-    header('Location: index.php');
+    header('Location: login.php?redirect=' . urlencode('Favoritos.php'));
     exit;
 }
 
@@ -67,7 +67,16 @@ foreach ($idsFavoritos as $idTmdb) {
                             <i class="bi bi-person" style="font-size:1.5rem; color:#2e2e2e;"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" style="background-color:#fff;">
-                            <li><a class="dropdown-item text-custom-dark" href="#">Perfil</a></li>
+                            <li>
+                                <span class="dropdown-item-text text-custom-dark px-3 py-2 d-block">
+                                    <?php
+                                    echo isset($_SESSION['nome_usuario'])
+                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
+                                        : 'Visitante';
+                                    ?>
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="logout.php" method="POST">
                                     <button type="submit" class="dropdown-item text-custom-dark">Desconectar</button>

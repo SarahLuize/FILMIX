@@ -3,10 +3,44 @@
 session_start();
 
 require_once 'api_tmdb.php';
+require_once 'db_funcoes.php';
 
 $lancamentos = buscarFilmesLancamentos();
-$recomendados = buscarFilmesPopulares();
-$popularesFilmix = buscarTodosFilmesPopulares(5);
+
+$recomendados = ['results' => []];
+
+if (isset($_SESSION['id_usuario'])) {
+    $idsFavoritos = listarIdsFavoritosPorUsuario((int) $_SESSION['id_usuario']);
+    if (!empty($idsFavoritos)) {
+        $listaRecomendados = montarRecomendadosParaUsuarioPorFavoritos($idsFavoritos, 10);
+        if (!empty($listaRecomendados)) {
+            $recomendados = ['results' => $listaRecomendados];
+        }
+    }
+}
+
+$popularesPagina = isset($_GET['pop_page']) ? max(1, (int) $_GET['pop_page']) : 1;
+$popularesResposta = buscarFilmesPopulares($popularesPagina);
+$popularesFilmix = [];
+$popularesTotalPaginas = 1;
+$popularesPaginaAtual = $popularesPagina;
+$popularesErro = null;
+
+if (isset($popularesResposta['erro'])) {
+    $popularesErro = $popularesResposta['erro'];
+} else {
+    $popularesFilmix = $popularesResposta['results'] ?? [];
+    $popularesTotalPaginas = max(1, (int) ($popularesResposta['total_pages'] ?? 1));
+    $popularesPaginaAtual = max(1, (int) ($popularesResposta['page'] ?? $popularesPagina));
+}
+
+/** @param int $p número da página (>= 1) */
+$urlPaginaPopulares = function (int $p): string {
+    $base = $p <= 1
+        ? 'TelaPrincipal.php'
+        : 'TelaPrincipal.php?' . http_build_query(['pop_page' => $p]);
+    return $base . '#populares-filmix';
+};
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -294,6 +328,44 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
         .user-icon {
             position: relative;
         }
+
+        .section-subtitle {
+            color: #999;
+            font-size: 14px;
+            margin: -18px 0 18px 40px;
+            padding: 0 20px;
+            max-width: 960px;
+            line-height: 1.4;
+        }
+
+        .populares-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .populares-pagination .populares-page-info {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .populares-pagination .carousel-btn.page-nav {
+            width: auto;
+            min-width: 44px;
+            padding: 8px 18px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .populares-pagination .carousel-btn.page-nav.is-disabled {
+            opacity: 0.35;
+            pointer-events: none;
+            cursor: default;
+        }
     </style>
 
     <header class="header">
@@ -323,7 +395,16 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end" style="background-color:#222;">
-                            <li><a class="dropdown-item text-white" href="#">Perfil</a></li>
+                            <li>
+                                <span class="dropdown-item-text text-white px-3 py-2 d-block">
+                                    <?php
+                                    echo isset($_SESSION['nome_usuario'])
+                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
+                                        : 'Visitante';
+                                    ?>
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider" style="border-color:#444;"></li>
                             <li>
                                 <form action="logout.php" method="POST">
                                     <button type="submit" class="dropdown-item text-white">Desconectar</button>
@@ -382,19 +463,20 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
 
 
 
+        <?php if (!empty($recomendados['results'])): ?>
         <div class="section-title">Recomendados para você</div>
+        <p class="section-subtitle">Com base nos filmes que você favoritou</p>
 
         <div class="recomendados-container">
             <div class="carousel-wrapper">
                 <button class="carousel-btn" onclick="scrollCarouselRecomendados('left')">‹</button>
                 <div class="movies-grid" id="gridRecomendados">
                     <?php
-                    if (isset($recomendados['results']) && !empty($recomendados['results'])) {
-                        $filmesRecomendados = array_slice($recomendados['results'], 0, 10);
-                        foreach ($filmesRecomendados as $filme) {
-                            $urlImagem = obterUrlImagem($filme['poster_path']);
-                            $titulo = htmlspecialchars($filme['title']);
-                            $filmeId = intval($filme['id']);
+                    $filmesRecomendados = array_slice($recomendados['results'], 0, 10);
+                    foreach ($filmesRecomendados as $filme) {
+                        $urlImagem = obterUrlImagem($filme['poster_path']);
+                        $titulo = htmlspecialchars($filme['title']);
+                        $filmeId = intval($filme['id']);
                     ?>
                             <a href="detalhes_filme.php?id=<?php echo $filmeId; ?>" style="text-decoration: none;">
                                 <div class="movie-card">
@@ -410,28 +492,28 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                                 </div>
                             </a>
                         <?php
-                        }
-                    } else {
-                        ?>
-                        <div class="movie-card">
-                            <div class="movie-card-image">
-                                <span style="color: #999; font-size: 12px;">Nenhum filme disponível</span>
-                            </div>
-                        </div>
-                    <?php
                     }
                     ?>
                 </div>
                 <button class="carousel-btn" onclick="scrollCarouselRecomendados('right')">›</button>
             </div>
         </div>
+        <?php endif; ?>
 
-        <div class="section-title">Populares do FILMIX</div>
+        <div class="section-title" id="populares-filmix">Populares do FILMIX</div>
 
         <div class="populares-container">
             <div class="populares-grid" id="gridPopulares">
                 <?php
-                if (!empty($popularesFilmix)) {
+                if ($popularesErro !== null) {
+                    ?>
+                    <div class="movie-card" style="grid-column: 1 / -1;">
+                        <div class="movie-card-image" style="height: auto; min-height: 120px; padding: 1rem;">
+                            <span style="color: #999; font-size: 14px;">Não foi possível carregar os populares. Tente novamente.</span>
+                        </div>
+                    </div>
+                    <?php
+                } elseif (!empty($popularesFilmix)) {
                     foreach ($popularesFilmix as $filme) {
                         $urlImagem = obterUrlImagem($filme['poster_path']);
                         $titulo = htmlspecialchars($filme['title']);
@@ -463,6 +545,28 @@ $popularesFilmix = buscarTodosFilmesPopulares(5);
                 }
                 ?>
             </div>
+
+            <?php if ($popularesErro === null && $popularesTotalPaginas > 1): ?>
+                <nav class="populares-pagination" aria-label="Mudar página dos populares">
+                    <?php
+                    $temAnterior = $popularesPaginaAtual > 1;
+                    $temProxima = $popularesPaginaAtual < $popularesTotalPaginas;
+                    ?>
+                    <?php if ($temAnterior): ?>
+                        <a class="carousel-btn page-nav" href="<?php echo htmlspecialchars($urlPaginaPopulares($popularesPaginaAtual - 1)); ?>">Anterior</a>
+                    <?php else: ?>
+                        <span class="carousel-btn page-nav is-disabled" aria-disabled="true">Anterior</span>
+                    <?php endif; ?>
+
+                    <span class="populares-page-info">Página <?php echo (int) $popularesPaginaAtual; ?> de <?php echo (int) $popularesTotalPaginas; ?></span>
+
+                    <?php if ($temProxima): ?>
+                        <a class="carousel-btn page-nav" href="<?php echo htmlspecialchars($urlPaginaPopulares($popularesPaginaAtual + 1)); ?>">Próxima</a>
+                    <?php else: ?>
+                        <span class="carousel-btn page-nav is-disabled" aria-disabled="true">Próxima</span>
+                    <?php endif; ?>
+                </nav>
+            <?php endif; ?>
         </div>
     </main>
 

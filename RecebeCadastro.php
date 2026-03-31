@@ -53,7 +53,7 @@ if ($resultado['sucesso']) {
         $_SESSION['email_usuario'] = $usuario['email'];
         header('Location: TelaPrincipal.php');
     } else {
-        header('Location: index.php');
+        header('Location: login.php');
     }
     exit;
 } else {

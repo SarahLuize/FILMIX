@@ -1,22 +1,28 @@
 <?php
-<<<<<<< HEAD
-// Página inicial redireciona para a tela principal de filmes
-header('Location: TelaPrincipal.php');
-exit;
-=======
 session_start();
 
-if (isset($_SESSION['usuario_id'])) {
-    header("Location: TelaPrincipal.php");
+// Se já estiver logado, vai para a tela principal
+if (isset($_SESSION['id_usuario'])) {
+    header('Location: TelaPrincipal.php');
     exit();
 }
 
+$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : '';
 $erroLogin = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : '';
 $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cadastro'] : '';
-unset($_SESSION['erro_login']);
-unset($_SESSION['sucesso_cadastro']);
+unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
 ?>
-
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FILMIX | Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
     <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
             <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
@@ -28,6 +34,7 @@ unset($_SESSION['sucesso_cadastro']);
             </div>
         </div>
     </div>
+
     <div class="login-container">
         <?php if (!empty($erroLogin)): ?>
             <div class="alert-erro">
@@ -40,6 +47,9 @@ unset($_SESSION['sucesso_cadastro']);
             </div>
         <?php endif; ?>
         <form action="RecebeLogin.php" method="post">
+            <?php if (!empty($redirect)): ?>
+                <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect, ENT_QUOTES, 'UTF-8'); ?>">
+            <?php endif; ?>
             <div class="mb-3">
                 <label for="LoginEmail" class="form-label">E-mail:</label>
                 <input type="email" class="form-control" name="LoginEmail" id="LoginEmail" placeholder="Insira seu e-mail" required>
@@ -71,4 +81,4 @@ unset($_SESSION['sucesso_cadastro']);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
->>>>>>> 46fc65f78cf160f39ebd69d8f3d4c040007727bd
+

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'api_tmdb.php';
 
 $termoPesquisa = isset($_POST['s']) ? trim($_POST['s']) : (isset($_GET['s']) ? trim($_GET['s']) : '');
@@ -253,7 +254,16 @@ if (!empty($termoPesquisa)) {
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end" style="background-color:#222;">
-                            <li><a class="dropdown-item text-white" href="#">Perfil</a></li>
+                            <li>
+                                <span class="dropdown-item-text text-white px-3 py-2 d-block">
+                                    <?php
+                                    echo isset($_SESSION['nome_usuario'])
+                                        ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8')
+                                        : 'Visitante';
+                                    ?>
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider" style="border-color:#444;"></li>
                             <li>
                                 <form action="logout.php" method="POST">
                                     <button type="submit" class="dropdown-item text-white">Desconectar</button>
