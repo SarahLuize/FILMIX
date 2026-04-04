@@ -40,28 +40,147 @@ if (isset($_SESSION['id_usuario'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
-
 </head>
-
-<style>
-    /* Tamanho para Telas Pequenas (Celular) */
-    .logo-filmix {
-        height: 100px;
-        width: auto;
-        transition: height 0.3s ease;
-    }
-
-    /* Tamanho para Telas Grandes (Computador - Desktop) */
-    @media (min-width: 992px) {
-        .logo-filmix {
-            height: 150px;
-        }
-    }
-</style>
+<!-- Detalhes_Filme.php -->
 
 <body>
-    <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-light">
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px 40px;
+            background-color: #1a1a1a;
+        }
+
+        /* Tamanho para Telas Pequenas (Celular) */
+        .logo-filmix {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+
+        /* Tamanho para Telas Grandes (Computador - Desktop) */
+        @media (min-width: 992px) {
+            .logo-filmix {
+                height: 150px;
+            }
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .navbar {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .navbar-collapse {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+        .user-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #2a2a2a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVIDADE - Detalhes do Filme */
+        @media (max-width: 768px) {
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .filme-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .poster-placeholder {
+                width: 100%;
+                max-width: 280px;
+                height: 420px;
+            }
+
+            .poster-actions {
+                justify-content: center;
+            }
+
+            .filme-titulo {
+                font-size: 26px;
+                text-align: center;
+            }
+
+            .filme-sinopse {
+                font-size: 15px;
+            }
+
+            .classificacao-label,
+            .classificacao-badge {
+                text-align: center;
+                display: block;
+            }
+        }
+    </style>
+    <header class="header" style="background-color: #1a1a1a;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="TelaPrincipal.php">
@@ -76,27 +195,27 @@ if (isset($_SESSION['id_usuario'])) {
 
                     <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
                         <div class="input-group">
-                            <input type="search" name="s" class="search-input" placeholder="Pesquise seu filme...">
-                            <button type="submit" class="search-btn">
+                            <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
+                            <button type="submit" class="btn search-btn">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
                     </form>
 
-                    <ul class="navbar-nav ms-auto align-items-left">
+                    <ul class="navbar-nav ms-auto align-items-start">
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                            <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="favoritos.php">Favoritos</a>
+                            <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="#">Gêneros</a>
+                            <a class="nav-link px-3 text-white" href="#">Gêneros</a>
                         </li>
 
                         <li class="nav-item dropdown ms-lg-2">
                             <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #000;"></i>
+                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #fff;"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
                                 <li>
@@ -106,6 +225,7 @@ if (isset($_SESSION['id_usuario'])) {
                                             ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
                                         ?>
                                     </span>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -122,7 +242,6 @@ if (isset($_SESSION['id_usuario'])) {
             </div>
         </nav>
     </header>
-
     <main class="main-content">
         <div class="filme-container">
             <div class="poster-container">

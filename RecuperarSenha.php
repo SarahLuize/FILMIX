@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/cadastro.css">
-    
+
 </head>
+
 <body>
-<?php
-session_start();
-$erroCadastro = isset($_SESSION['erro_cadastro']) ? $_SESSION['erro_cadastro'] : '';
-$sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cadastro'] : '';
-unset($_SESSION['erro_cadastro']);
-unset($_SESSION['sucesso_cadastro']);
-?>
+    <?php
+    session_start();
+    $erroCadastro = isset($_SESSION['erro_cadastro']) ? $_SESSION['erro_cadastro'] : '';
+    $sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cadastro'] : '';
+    unset($_SESSION['erro_cadastro']);
+    unset($_SESSION['sucesso_cadastro']);
+    ?>
     <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
             <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
-        <div class="banner-placeholder placeholder-box pt-xxl-5">
-            <div class="logos-img mt-xxl-5">
-                <img src="img/esqueci-senha-logo.png" alt="ESQUECI MINHA SENHA logo" class="logo-login mt-xxl-5">
-            </div>
+    <div class="banner-placeholder placeholder-box pt-xxl-5">
+        <div class="logos-img mt-xxl-5">
+            <img src="img/esqueci-senha-logo.png" alt="ESQUECI MINHA SENHA logo" class="logo-login mt-xxl-5">
         </div>
+    </div>
     </div>
 
     <br><br><br><br>
@@ -58,7 +60,7 @@ unset($_SESSION['sucesso_cadastro']);
     <div class="footer mt-xxl-5">
         <div class="TMDB-logo">
             <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
-        </div> 
+        </div>
         <div class="footer-disclaimer">
             <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
         </div>
@@ -67,4 +69,5 @@ unset($_SESSION['sucesso_cadastro']);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

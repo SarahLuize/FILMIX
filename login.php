@@ -14,6 +14,7 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,17 +23,18 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
     <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
             <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
-        <div class="banner-container-logos">
-            <div class="logos-img">
-                <img src="img/logo-login.png" alt="Logotipo LOGIN" class="logo-login">
-            </div>
+    <div class="banner-container-logos">
+        <div class="logos-img">
+            <img src="img/logo-login.png" alt="Logotipo LOGIN" class="logo-login">
         </div>
+    </div>
     </div>
 
     <div class="login-container">
@@ -72,7 +74,7 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
     <div class="footer">
         <div class="TMDB-logo">
             <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
-        </div> 
+        </div>
         <div class="footer-disclaimer">
             <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
         </div>
@@ -80,5 +82,5 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
 
+</html>

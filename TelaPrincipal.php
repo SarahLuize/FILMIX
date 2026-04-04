@@ -51,15 +51,17 @@ $urlPaginaPopulares = function (int $p): string {
     <title>FILMIX | Início</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
 </head>
-
+<!-- TelaPrincipal.PHP -->
 <body>
-
     <style>
         body {
             background-color: #0a0a0a;
             color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            flex-direction: column;
         }
 
         .header {
@@ -106,7 +108,13 @@ $urlPaginaPopulares = function (int $p): string {
         }
 
         .navbar {
-            background-color: #1a1a1a;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .navbar-collapse {
+            width: 100%;
         }
 
         /* Tamanho para Telas Pequenas (Celular) */
@@ -403,13 +411,13 @@ $urlPaginaPopulares = function (int $p): string {
                     <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
                         <div class="input-group">
                             <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
-                            <button type="submit" class="btn btn-outline-light">
+                            <button type="submit" class="search-btn">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
                     </form>
 
-                    <ul class="navbar-nav ms-auto align-items-left">
+                    <ul class="navbar-nav ms-auto align-items-start">
                         <li class="nav-item">
                             <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
                         </li>
@@ -432,6 +440,7 @@ $urlPaginaPopulares = function (int $p): string {
                                             ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
                                         ?>
                                     </span>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
