@@ -41,7 +41,6 @@ if (isset($_SESSION['id_usuario'])) {
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
 </head>
-<!-- Detalhes_Filme.php -->
 
 <body>
 
@@ -60,14 +59,14 @@ if (isset($_SESSION['id_usuario'])) {
             background-color: #1a1a1a;
         }
 
-        /* Tamanho para Telas Pequenas (Celular) */
+        /* Tamanho para telas pequenas */
         .logo-filmix {
             height: 100px;
             width: auto;
             transition: height 0.3s ease;
         }
 
-        /* Tamanho para Telas Grandes (Computador - Desktop) */
+        /* Tamanho para telas grandes */
         @media (min-width: 992px) {
             .logo-filmix {
                 height: 150px;

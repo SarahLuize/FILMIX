@@ -53,6 +53,7 @@ $urlPaginaPopulares = function (int $p): string {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
 <!-- TelaPrincipal.PHP -->
+
 <body>
     <style>
         body {
@@ -203,6 +204,19 @@ $urlPaginaPopulares = function (int $p): string {
             overflow-x: auto;
             scroll-behavior: smooth;
             flex: 1;
+            -webkit-mask-image: linear-gradient(to right,
+                    transparent 0%,
+                    black 8%,
+                    black 92%,
+                    transparent 100%);
+            mask-image: linear-gradient(to right,
+                    transparent 0%,
+                    black 8%,
+                    black 92%,
+                    transparent 100%);
+            padding-left: calc(50% - 100px);
+            padding-right: calc(50% - 100px);
+            scroll-padding-left: calc(50% - 100px);
         }
 
         .carousel-items::-webkit-scrollbar {
@@ -221,7 +235,7 @@ $urlPaginaPopulares = function (int $p): string {
             flex-shrink: 0;
             overflow: hidden;
             cursor: pointer;
-            /* transition: transform 0.3s; */
+            transition: transform 0.3s;
             transform: scale(0.9);
             transition: transform 0.35s ease, opacity 0.35s ease;
         }
@@ -392,6 +406,136 @@ $urlPaginaPopulares = function (int $p): string {
             pointer-events: none;
             cursor: default;
         }
+
+        @media (min-width: 500px) and (max-width: 768px) {
+
+            .movie-poster {
+                min-width: 160px;
+                height: 210px;
+                transform: scale(1);
+            }
+
+            .movie-poster.featured {
+                min-width: 200px;
+                height: 240px;
+                transform: scale(1);
+
+            }
+
+            .carousel-items,
+            .movies-grid {
+                justify-content: flex-start;
+                scroll-snap-type: x mandatory;
+                padding-left: calc(50% - 80px);
+                padding-right: calc(50% - 80px);
+            }
+
+            .movie-poster {
+                scroll-snap-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .movie-poster {
+                min-width: 100px;
+                height: 150px;
+                transform: scale(1);
+            }
+
+            .movie-poster.featured {
+                min-width: 120px;
+                height: 170px;
+                transform: scale(1);
+            }
+
+            .carousel-items,
+            .movies-grid {
+                padding-left: calc(50% - 50px);
+                padding-right: calc(50% - 50px);
+                scroll-padding-left: calc(50% - 50px);
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .movie-poster {
+                min-width: 130px;
+                height: 195px;
+                transform: scale(1);
+            }
+
+            .movie-poster.featured {
+                min-width: 155px;
+                height: 225px;
+                transform: scale(1);
+            }
+
+            .carousel-items,
+            .movies-grid {
+                justify-content: flex-start;
+                scroll-snap-type: x mandatory;
+                padding-left: calc(50% - 65px);
+                padding-right: calc(50% - 65px);
+                scroll-padding-left: calc(50% - 65px);
+            }
+
+            .movie-poster {
+                scroll-snap-align: center;
+            }
+        }
+
+        @media (min-width: 381px) and (max-width: 480px) {
+            .movie-poster {
+                min-width: 120px;
+                height: 175px;
+                transform: scale(1);
+            }
+
+            .movie-poster.featured {
+                min-width: 140px;
+                height: 200px;
+                transform: scale(1);
+            }
+
+            .carousel-items,
+            .movies-grid {
+                justify-content: flex-start;
+                scroll-snap-type: x mandatory;
+                padding-left: calc(50% - 60px);
+                padding-right: calc(50% - 60px);
+                scroll-padding-left: calc(50% - 60px);
+            }
+
+            .movie-poster {
+                scroll-snap-align: center;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .movie-poster {
+                min-width: 95px;
+                height: 140px;
+                transform: scale(1);
+            }
+
+            .movie-poster.featured {
+                min-width: 110px;
+                height: 160px;
+                transform: scale(1);
+            }
+
+            .carousel-items,
+            .movies-grid {
+                justify-content: flex-start;
+                scroll-snap-type: x mandatory;
+                padding-left: calc(50% - 47px);
+                padding-right: calc(50% - 47px);
+                scroll-padding-left: calc(50% - 47px);
+            }
+
+            .movie-poster {
+                scroll-snap-align: center;
+            }
+        }
     </style>
 
     <header class="header" style="background-color: #1a1a1a;">
@@ -469,8 +613,8 @@ $urlPaginaPopulares = function (int $p): string {
                     if (isset($lancamentos['results']) && !empty($lancamentos['results'])) {
                         $filmesLancamentos = array_slice($lancamentos['results'], 0, 10);
                         foreach ($filmesLancamentos as $index => $filme) {
-                            // $classePoster = ($index === 1) ? 'movie-poster featured' : 'movie-poster';
-                            $classePoster = 'movie-poster';
+                            $classePoster = ($index === 1) ? 'movie-poster featured' : 'movie-poster';
+                            //$classePoster = 'movie-poster';
                             $urlImagem = obterUrlImagem($filme['poster_path']);
                             $titulo = htmlspecialchars($filme['title']);
                             $filmeId = intval($filme['id']);
@@ -630,9 +774,10 @@ $urlPaginaPopulares = function (int $p): string {
             setTimeout(updateFeatured, 350);
         }
 
-        function scrollCarouselRecomendados(direction) {
-            const carousel = document.getElementById('gridRecomendados');
-            const scrollAmount = 250;
+        function scrollCarousel(direction) {
+            const carousel = document.getElementById('carouselLancamentos');
+            const poster = carousel.querySelector('.movie-poster');
+            const scrollAmount = poster ? poster.offsetWidth + 20 : 250; // largura real + gap
 
             if (direction === 'left') {
                 carousel.scrollBy({
@@ -645,22 +790,35 @@ $urlPaginaPopulares = function (int $p): string {
                     behavior: 'smooth'
                 });
             }
+            setTimeout(updateFeatured, 350);
         }
 
         function updateFeatured() {
+            const carousel = document.getElementById('carouselLancamentos');
             const posters = document.querySelectorAll('#carouselLancamentos .movie-poster');
 
-            posters.forEach(poster => poster.classList.remove('featured'));
-            const carousel = document.getElementById('carouselLancamentos');
-            const scrollLeft = carousel.scrollLeft;
+            const centroCarrossel = carousel.getBoundingClientRect().left + carousel.offsetWidth / 2;
 
-            const itemWidth = posters[0].offsetWidth + 10;
-            const index = Math.round(scrollLeft / itemWidth) + 1;
+            let maisProximo = null;
+            let menorDistancia = Infinity;
 
-            if (posters[index]) {
-                posters[index].classList.add('featured');
-            }
+            posters.forEach(poster => {
+                const centroPoster = poster.getBoundingClientRect().left + poster.offsetWidth / 2;
+                const distancia = Math.abs(centroCarrossel - centroPoster);
+
+                if (distancia < menorDistancia) {
+                    menorDistancia = distancia;
+                    maisProximo = poster;
+                }
+            });
+
+            posters.forEach(p => p.classList.remove('featured'));
+            if (maisProximo) maisProximo.classList.add('featured');
         }
+
+        const carousel = document.getElementById('carouselLancamentos');
+        carousel.addEventListener('scroll', updateFeatured);
+        updateFeatured();
     </script>
 </body>
 
