@@ -209,7 +209,7 @@ if (isset($_SESSION['id_usuario'])) {
                             <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="#">Gêneros</a>
+                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
                         </li>
 
                         <li class="nav-item dropdown ms-lg-2">

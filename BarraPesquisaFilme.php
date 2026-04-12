@@ -22,6 +22,17 @@ if (!empty($termoPesquisa)) {
         $totalPaginas = $resultados['total_pages'] ?? 0;
     }
 }
+
+$generoId = isset($_GET['genero_id']) ? intval($_GET['genero_id']) : 0;
+$generoNome = isset($_GET['genero_nome']) ? trim($_GET['genero_nome']) : '';
+
+if ($generoId > 0) {
+    $resultados = buscarFilmesPorGenero($generoId, $pagina);
+    if (isset($resultados['results'])) {
+        $totalResultados = $resultados['total_results'] ?? 0;
+        $totalPaginas = $resultados['total_pages'] ?? 0;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -301,7 +312,7 @@ if (!empty($termoPesquisa)) {
                             <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="#">Gêneros</a>
+                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
                         </li>
 
                         <li class="nav-item dropdown ms-lg-2">
@@ -335,8 +346,13 @@ if (!empty($termoPesquisa)) {
     </header>
 
     <main>
-        <?php if (!empty($termoPesquisa)): ?>
-            <div class="section-title">Resultados da Pesquisa: "<?php echo htmlspecialchars($termoPesquisa); ?>"</div>
+        <?php if ($generoId > 0): ?>
+            <div class="section-title">Gênero: <?php echo htmlspecialchars($generoNome); ?></div>
+        <?php elseif (!empty($termoPesquisa)): ?>
+            <div class="section-title">Resultados: "<?php echo htmlspecialchars($termoPesquisa); ?>"</div>
+        <?php endif; ?>
+        
+        <?php if (!empty($termoPesquisa) || $generoId > 0): ?>
 
             <?php if (isset($resultados['results']) && !empty($resultados['results'])): ?>
                 <div class="resultados-info">

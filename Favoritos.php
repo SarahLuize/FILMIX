@@ -84,12 +84,7 @@ foreach ($idsFavoritos as $idTmdb) {
             font-size: 16px;
             padding: 40px 0;
         }
-    </style>
-</head>
 
-<body>
-
-    <style>
         /* Tamanho para Telas Pequenas (Celular) */
         .logo-filmix {
             height: 100px;
@@ -122,8 +117,8 @@ foreach ($idsFavoritos as $idTmdb) {
 
                         <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
                             <div class="input-group">
-                                <input type="search" name="s" class="search-input" placeholder="Pesquise seu filme...">
-                                <button type="submit" class="search-btn">
+                                <input type="search" name="s" class="form-control search-input" placeholder="Pesquise seu filme...">
+                                <button type="submit" class="btn search-btn">
                                     <i class="bi bi-search"></i>
                                 </button>
                             </div>
@@ -137,7 +132,7 @@ foreach ($idsFavoritos as $idTmdb) {
                                 <a class="nav-link px-3 text-black" href="favoritos.php">Favoritos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 text-black" href="#">Gêneros</a>
+                                <a class="nav-link px-3 text-black" href="Generos_Filmes.php">Gêneros</a>
                             </li>
 
                             <li class="nav-item dropdown ms-lg-2">

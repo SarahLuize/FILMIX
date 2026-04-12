@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id_usuario'])) {
-    header('Location: login.php?redirect=' . urlencode('assistir_mais_tarde.php'));
+    header('Location: login.php?redirect=' . urlencode('Generos_Filmes.php'));
     exit;
 }
 
@@ -10,19 +10,9 @@ require_once 'db_funcoes.php';
 require_once 'api_tmdb.php';
 
 $idUsuario = (int) $_SESSION['id_usuario'];
-$idsLista = listarIdsAssistirMaisTardePorUsuario($idUsuario);
 $filmes = [];
 
-foreach ($idsLista as $idTmdb) {
-    $dados = buscarFilmePorId($idTmdb);
-    if (!isset($dados['erro'])) {
-        $filmes[] = [
-            'id' => $idTmdb,
-            'title' => $dados['title'] ?? '',
-            'poster_path' => $dados['poster_path'] ?? null
-        ];
-    }
-}
+$generos = buscarGeneros();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,12 +20,61 @@ foreach ($idsLista as $idTmdb) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIX | Assistir mais Tarde</title>
+    <title>FILMIX | Gêneros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
     <style>
+        .favoritos-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .favoritos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 24px;
+        }
+
+        .favoritos-card {
+            text-align: center;
+        }
+
+        .favoritos-card a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .favoritos-poster {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+
+        .favoritos-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .favoritos-card-titulo {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .favoritos-vazio {
+            color: #666;
+            font-size: 16px;
+            padding: 40px 0;
+        }
+
         /* Tamanho para Telas Pequenas (Celular) */
         .logo-filmix {
             height: 100px;
@@ -50,59 +89,9 @@ foreach ($idsLista as $idTmdb) {
             }
         }
 
-        .lista-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 24px;
-            color: #333;
-        }
-
-        .lista-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 24px;
-        }
-
-        .lista-card {
-            text-align: center;
-        }
-
-        .lista-card a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        .lista-poster {
-            width: 100%;
-            aspect-ratio: 2/3;
-            background: #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 2px solid #ddd;
-        }
-
-        .lista-poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .lista-card-titulo {
-            margin-top: 10px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .lista-vazio {
-            color: #666;
-            font-size: 16px;
-            padding: 40px 0;
-        }
     </style>
-</head>
 
 <body>
-
     <header class="header">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
@@ -167,31 +156,19 @@ foreach ($idsLista as $idTmdb) {
     </header>
 
     <main class="main-content">
-        <h1 class="lista-title">Assistir mais Tarde</h1>
-        <?php if (empty($filmes)): ?>
-            <p class="lista-vazio">Você ainda não adicionou nenhum filme. Clique no ícone de relógio na página de um filme para adicionar.</p>
-        <?php else: ?>
-            <div class="lista-grid">
-                <?php foreach ($filmes as $f): ?>
-                    <?php
-                    $urlPoster = obterUrlImagem($f['poster_path']);
-                    $titulo = htmlspecialchars($f['title']);
-                    ?>
-                    <div class="lista-card">
-                        <a href="detalhes_filme.php?id=<?php echo $f['id']; ?>">
-                            <div class="lista-poster">
-                                <?php if (!empty($urlPoster)): ?>
-                                    <img src="<?php echo $urlPoster; ?>" alt="<?php echo $titulo; ?>" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#999;font-size:12px;\'>Sem imagem</span>'">
-                                <?php else: ?>
-                                    <span style="color:#999;font-size:12px;">Sem imagem</span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="lista-card-titulo"><?php echo $titulo; ?></div>
-                        </a>
+        <h1 class="favoritos-title">Gêneros de Filmes</h1>
+
+        <div class="favoritos-grid">
+            <?php foreach ($generos['genres'] as $genero): ?>
+                <a href="BarraPesquisaFilme.php?genero_id=<?php echo $genero['id']; ?>&genero_nome=<?php echo urlencode($genero['name']); ?>">
+                    <div class="favoritos-card">
+                        <div class="favoritos-poster" style="display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 18px; font-weight: bold;"><?php echo htmlspecialchars($genero['name']); ?></span>
+                        </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
     </main>
 
     <footer class="footer">
