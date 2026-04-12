@@ -8,7 +8,10 @@ CREATE TABLE usuario (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+	token VARCHAR(220) NOT NULL,
+	validade VARCHAR(220) NOT NULL,
+	situacao TINYINT(1) NOT NULL DEFAULT 0		
 );
 
 -- Filme (dados principais vindos da API TMDB)

@@ -1,8 +1,8 @@
 <?php
+session_start();
 
 require_once 'db_funcoes.php';
 
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: login.php');
@@ -30,17 +30,34 @@ if (empty($email) || empty($senha)) {
     $_SESSION['erro_login'] = 'Por favor, preencha todos os campos.';
     voltarParaLoginComRedirect($redirect);
 }
+if (empty($email) || empty($senha)) {
+    $_SESSION['erro_login'] = 'Por favor, preencha todos os campos.';
+    header('Location: login.php');
+    exit;
+}
 
-$usuario = buscarUsuarioPorEmail($email);
+$usuario = buscarUsuarioAtivo($email);
 
 if (!$usuario) {
-    $_SESSION['erro_login'] = 'E-mail não cadastrado no sistema. Por favor, cadastre-se para continuar.';
+    $_SESSION['erro_login'] = 'E-mail não cadastrado no sistema ou não validado. Por favor, cadastre-se para continuar.';
     voltarParaLoginComRedirect($redirect);
 }
 
 if (!password_verify($senha, $usuario['senha'])) {
     $_SESSION['erro_login'] = 'Senha incorreta. Tente novamente.';
     voltarParaLoginComRedirect($redirect);
+	
+	if (!$usuario) {
+    $_SESSION['erro_login'] = 'E-mail não encontrado ou conta aguardando ativação. Verifique sua caixa de entrada.';    
+    header('Location: login.php');
+    exit;
+}
+
+if (!password_verify($senha, $usuario['senha'])) {
+    $_SESSION['erro_login'] = 'Senha incorreta. Tente novamente.';
+    header('Location: login.php');
+    exit;
+}
 }
 
 $_SESSION['id_usuario'] = $usuario['id_usuario'];

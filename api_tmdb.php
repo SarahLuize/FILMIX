@@ -58,7 +58,7 @@ function buscarFilmesPopulares($pagina = 1) {
 
 /**
  * Recomendações do TMDB para um filme (filmes similares / sugeridos).
- * @see https://developer.themoviedb.org/reference/movie-recommendations
+ * see https://developer.themoviedb.org/reference/movie-recommendations
  */
 function buscarRecomendacoesTmdbFilme(int $idTmdb, int $pagina = 1) {
     $apiKey = TMDB_API_KEY;
@@ -258,3 +258,68 @@ function formatarDataFilme($data) {
     return date('d/m/Y', $timestamp);
 }
 
+/* Retorna a lista de gêneros de filmes */
+function buscarGeneros() {
+    $apiKey = TMDB_API_KEY;
+    $url = TMDB_BASE_URL . '/genre/movie/list?api_key=' . $apiKey . '&language=pt-BR';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        return ['erro' => 'Erro ao buscar gêneros', 'codigo' => $httpCode];
+    }
+
+    $dados = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['erro' => 'Erro ao decodificar resposta da API'];
+    }
+
+    return $dados;
+}
+
+/* Converte os IDs dos gêneros dos filmes em nomes */
+function mostrarNomesGeneros(array $idsGeneros, array $listaGeneros): array {
+    $mapa = array_column($listaGeneros, 'name', 'id');
+    $nomes = [];
+    foreach ($idsGeneros as $id) {
+        if (isset($mapa[$id])) {
+            $nomes[] = $mapa[$id];
+        }
+    }
+    return $nomes;
+}
+
+/* Busca filmes filtrados por gênero */
+function buscarFilmesPorGenero($generoId, $pagina = 1) {
+    $apiKey = TMDB_API_KEY;
+    $url = TMDB_BASE_URL . '/discover/movie?api_key=' . $apiKey . '&language=pt-BR&with_genres=' . $generoId . '&page=' . $pagina;
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        return ['erro' => 'Erro ao buscar filmes por gênero', 'codigo' => $httpCode];
+    }
+
+    $dados = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['erro' => 'Erro ao decodificar resposta da API'];
+    }
+
+    return $dados;
+}

@@ -1,9 +1,21 @@
 <?php
 
 session_start();
+require_once 'db_funcoes.php';
 
 require_once 'api_tmdb.php';
-require_once 'db_funcoes.php';
+
+If(isset($_SESSION['id_usuario']) && (!isset($_SESSION['situacao']) || $_SESSION['situacao'] !=1)){
+    $dadosUsuario = buscarUsuarioAtivoPorId((int)$_SESSION['id_usuario']);
+
+    if(!$dadosUsuario || $dadosUsuario['situacao'] !=1){
+        session_destroy();
+        header("Location: login.php?erro=valide_email");
+        exit;
+    }else{
+        $_SESSION['situacao'] = 1;
+    }
+}
 
 $lancamentos = buscarFilmesLancamentos();
 
@@ -569,7 +581,7 @@ $urlPaginaPopulares = function (int $p): string {
                             <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="#">Gêneros</a>
+                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
                         </li>
 
                         <li class="nav-item dropdown ms-lg-2">

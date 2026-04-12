@@ -1,45 +1,59 @@
 <?php
 
 require_once 'config_db.php';
+include('config.php');
+require_once __DIR__ . '/vendor/autoload.php';
 
-function inserirUsuario($nome, $email, $senha) {
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+   // echo " O arquivo autoload foi ENCONTRADO!";
+} else {
+    die("ERRO: O arquivo não foi encontrado no caminho: " . __DIR__ . '/lib/vendor/autoload.php');
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0) {
     $conn = obterConexao();
     
-    $nome = mysqli_real_escape_string($conn, $nome);
-    $email = mysqli_real_escape_string($conn, $email);
+    
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-    
-    $query = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
+    $query = "INSERT INTO usuario (nome, email, senha, token, validade, situacao) 
+    VALUES (?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
+    /*
+    $query = "INSERT INTO usuario (nome, email, senha, token, validade, situacao) 
+    VALUES (?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 24 HOUR), ?)";
+    */
     $stmt = mysqli_prepare($conn, $query);
-    
-    if (!$stmt) {
-        return ['sucesso' => false, 'erro' => 'Erro ao preparar consulta'];
+
+    //Validação para teste de 5 minutos
+    if(!$stmt){
+        return['sucesso' => false, 'erro' => 'Erro ao preparar consulta: '. mysqli_error($conn)];
     }
+    //<-
+    mysqli_stmt_bind_param($stmt, 'ssssi', $nome, $email, $senhaHash, $token, $situacao);
     
-    mysqli_stmt_bind_param($stmt, 'sss', $nome, $email, $senhaHash);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        $idUsuario = mysqli_insert_id($conn);
-        mysqli_stmt_close($stmt);
-        return ['sucesso' => true, 'id_usuario' => $idUsuario];
+    $resultado = [];
+    if(mysqli_stmt_execute($stmt)){
+        $resultado['sucesso'] = true;
+        //Condição para teste de 5 minutos
+        $resultado['id_usuario'] = mysqli_insert_id($conn); //Importante se precisar do ID depois
+    }else{
+        $resultado['sucesso'] = false;
+        $resultado['erro'] = mysqli_error($conn);
     }
-    
-    $erro = mysqli_error($conn);
+    //inclusão para 3 minutos
     mysqli_stmt_close($stmt);
-    return ['sucesso' => false, 'erro' => $erro];
+    return $resultado;    
 }
 
 function buscarUsuarioPorEmail($email) {
     $conn = obterConexao();
+    $query = "SELECT id_usuario, nome, email, senha, situacao, validade 
+              FROM usuario 
+              WHERE email = ?";
     
-    $email = mysqli_real_escape_string($conn, $email);
-    $query = "SELECT id_usuario, nome, email, senha, data_cadastro FROM usuario WHERE email = ?";
     $stmt = mysqli_prepare($conn, $query);
-    
-    if (!$stmt) {
-        return null;
-    }
-    
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
     $resultado = mysqli_stmt_get_result($stmt);
@@ -49,6 +63,82 @@ function buscarUsuarioPorEmail($email) {
     return $usuario;
 }
 
+function buscarUsuarioAtivo($email){
+    $conn = obterConexao();
+    
+    $query = "SELECT id_usuario, nome, email, senha 
+              FROM usuario
+              WhERE email = ? AND situacao = 1";              
+   
+    $stmt = mysqli_prepare($conn, $query);
+    
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_assoc($resultado);
+}
+
+function buscarUsuarioAtivoPorId($id){
+    $conn = obterConexao();
+    $query = "SELECT id_usuario, nome, email, situacao 
+              FROM usuario 
+              WHERE id_usuario = ? AND situacao = 1";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    return mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+}
+
+function excluirUsuarioExpirado($email) {
+    $conn = obterConexao();
+    // Apaga apenas se a situacao for 0 (pendente)
+    $sql = "DELETE FROM usuario WHERE email = ? AND situacao = 0";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    $executou = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    return $executou;
+}
+
+function atualizarTokenRecuperacao($email, $token, $validade){
+    $conn = obterConexao();
+
+    $sql = "UPDATE usuario 
+            SET token = ?, validade = ?
+            WHERE email = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sss", $token, $validade, $email);
+    return mysqli_stmt_execute($stmt);
+}
+
+function preparaRecuperacao($email, $token, $validade){
+    $conn = obterConexao();
+
+    $sql = "UPDATE usuario
+            SET token = ?, validade = ? 
+            WHERE email = ?";
+    $stmt  = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sss", $token, $validade, $email);
+    return mysqli_stmt_execute($stmt);
+}
+
+function buscarUsuarioPorToken($token){
+    $conn = obterConexao();
+
+    $agora = date('Y-m-d H:i:s');
+
+    $sql = "SELECT id_usuario, nome
+            FROM usuario
+            WHERE token = ? AND validade > ? LIMIT 1";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $token, $agora);
+    mysqli_stmt_execute($stmt);
+
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_assoc($resultado);
+}
 function inserirFilme($idTmdb, $titulo, $idiomaOriginal, $popularidade, $mediaAvaliacao, $posterUrl, $dataLancamento, $sinopse) {
     $conn = obterConexao();
     
@@ -391,3 +481,58 @@ function listarIdsAssistirMaisTardePorUsuario($idUsuario) {
     return $ids;
 }
 
+function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
+    include 'config.php';
+
+    try {
+        $mail = new PHPMailer(true);
+   
+        
+        $mail->SMTPDebug = 0;
+        $mail->CharSet = "UTF-8"; 
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->Port       = 587;
+        $mail->Username   = 'filmix.oficial@gmail.com'; 
+        $mail->Password   = '' ; // 16 dígitos do Google
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPAuth   = true;
+        
+   
+        // Destinatários
+        $mail->setFrom('filmix.oficial@gmail.com', 'Filmix Oficial');
+        $mail->addReplyTo('filmix.oficial@gmail.com', 'Filmix Oficial');
+        $mail->addAddress($emailDestino, $nomeUsuario);
+
+        // Conteúdo
+        $mail->isHTML(true);
+        $mail->Subject = 'Ative sua conta no Filmix';
+        $mail->Body    = "<h1>Olá, $nomeUsuario!</h1>
+                          <p>Clique no link abaixo para validar seu cadastro:</p>
+                          <a href='http://localhost/filmix/validaEmail.php?token=$token'>ATIVAR MINHA CONTA</a>";
+
+        $mail->AltBody = "Olá, $nomeUsuario! Para ativar sua conta, copie e cole o link no navegador: http://localhost/filmix/validaEmail.php?token=$token";
+        $mail->send();
+            echo "E-mail enviado com sucesso!";
+        return true;
+
+        } catch (Exception $e) {
+        echo "Erro detalhado com PHPMailer: {$mail->ErrorInfo}";
+        //error_log("Erro ao enviar e-mail: {$mail->ErrorInfo}");
+        return false;
+    }
+        
+}
+function salvaTokenRecuperacao($email, $token, $validade){
+    $conn = obterConexao();
+
+    
+    $sql = "UPDATE usuario
+            SET token = ?, validade = ?
+            WHERE email = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sss", $token, $validade, $email);
+
+    return mysqli_stmt_execute($stmt);
+    
+}
