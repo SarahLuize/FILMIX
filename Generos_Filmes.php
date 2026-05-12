@@ -178,10 +178,6 @@ $generos = buscarGeneros();
         <div class="footer-disclaimer">
             <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
         </div>
-        <div class="footer-links">
-            <a href="TelaPrincipal.php">Ver filmes</a>
-            <a href="#">Sobre</a>
-        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
