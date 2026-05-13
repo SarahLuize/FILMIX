@@ -206,7 +206,61 @@ function obterClassificacaoFilme($filme)
 
     $classificacoes = 
     [
-     'IN' => [
+
+    // ------ AMÉRICA DO SUL ------
+    'AR' => [ //ARGENTINA
+        'ATP' => 'L',
+        '13'  => '12',
+        '16'  => '16',
+        '18'  => '18'
+    ],
+    'CL' => [ //CHILE
+        'TE' => 'L',
+        '7'  => '10',
+        '14' => '14',
+        '18'  => '18'
+    ],
+
+    // ------ AMÉRICA DO NORTE ------
+    'US' => [ //ESTADOS UNIDOS
+        'G' => 'L',
+        'PG' => '10',
+        'PG-13' => '12',
+        'R' => '16',
+        'NC-17' => '18'
+    ],
+    'CA' => [ //CANADÁ
+        //
+    ],
+    'MX' => [ //MEXICO
+        //
+    ],
+
+    // ------ EUROPA ------
+     'GB' => [ //REINO UNIDO
+        //
+    ],
+    'DE' => [ //ALEMANHA
+        //
+    ],
+    'IT' => [ //ITALIA
+        //
+    ],
+    'FR' => [ //FRANÇA
+        //
+    ],
+    'ES' => [ //ESPANHA
+        //
+    ],
+    'PT' => [ //PORTUGAL
+        //
+    ],
+    'NL' => [ //PAÍSES BAIXOS/HOLANDA
+        //
+    ],
+
+    // ------ ÁSIA  ------
+    'IN' => [ //INDIA
         'U'       => 'L',
         'UA'      => '12',
         'UA 7+'   => '10',
@@ -214,33 +268,32 @@ function obterClassificacaoFilme($filme)
         'UA 16+'  => '16',
         'A'       => '18',
         'S'       => '18'
-     ],
-
-     'US' => [
-        'G' => 'L',
-        'PG' => '10',
-        'PG-13' => '12',
-        'R' => '16',
-        'NC-17' => '18'
-     ],
-     'JP' => [ 
+    ],
+    'JP' => [ //JAPÃO
         'ALL' => 'L',
         '12' => '12',
         'R15+' => '16',
         'R18+' => '18'
-     ],
-     'KO' => [
+    ],
+    'KR' => [ //COREIA DO SUL
         'G' => 'L',
         '12' => '12',
         '15' => '16',
         '19' => '18',
         'Restricted Screening' => '18'
-     ]
-     //REINO UNIDO GB
-     //AUSTRALIA AU
-     //CANADÁ CA
-     //ALEMANHA DE
-     //ITALIA IT
+    ],
+    'PH' => [ //FILIPINAS
+        //
+    ],
+
+    // ------ OCEANIA ------
+    'AU' => [ //AUSTRALIA
+        //
+    ],
+    'NZ' => [ //NOVA ZELANDIA
+        //
+    ],
+
     ];
 
     if (isset($filme['release_dates']['results'])) {
