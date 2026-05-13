@@ -230,10 +230,17 @@ function obterClassificacaoFilme($filme)
         'NC-17' => '18'
     ],
     'CA' => [ //CANADÁ
-        //
+        'G' => 'L',
+        'PG' => '10',
+        '14A' => '14',
+        '18A' => '18'
     ],
     'MX' => [ //MEXICO
-        //
+        'A' => 'L',
+        'AA' => '6',
+        'B' => '12',
+        'B-15' => '16',
+        'C' => '18'
     ],
 
     // ------ EUROPA ------
@@ -256,7 +263,8 @@ function obterClassificacaoFilme($filme)
         //
     ],
     'NL' => [ //PAÍSES BAIXOS/HOLANDA
-        //
+        'AL' => 'L',
+        '9' => '10'
     ],
 
     // ------ ÁSIA  ------
@@ -291,7 +299,17 @@ function obterClassificacaoFilme($filme)
         //
     ],
     'NZ' => [ //NOVA ZELANDIA
-        //
+        'G' => 'L',
+        'PG' => '6',
+        'M' => '16',
+        'RP13' => '14',
+        'RP16' => '16',
+        'RP18' => '18',
+        'R13' => '14',
+        'R15' => '16',
+        'R16' => '16',
+        'R18' => '18',
+        'R' => 'Filtrar'
     ],
 
     ];
