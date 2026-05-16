@@ -8,11 +8,12 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Verificação em duas etapas (confirmação de e-mail para cadastro e redefinição de senha)
 - Redefinição de senha
 - Busca de filmes
-- Detalhes dos filmes (sinopse, gênero e pôster)
+- Detalhes dos filmes (sinopse, classificação indicativa, gênero e pôster)
 - Favoritar filmes
 - Adicionar filmes a lista de assistir mais tarde
 - Recomendações personalizadas baseadas nos favoritos
 - Navegação por gêneros para facilitar a busca por filmes específicos
+- Filtro por idade (em breve)
 
 ## Como usar
 (Adicionar)
@@ -23,9 +24,9 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - CSS
 - Bootstrap 5
 - MySQL 8.0
-- API TMDB
+- API TMDB v3
 - PHPMailer 6.0
-- Composer 2.9.5
+- Composer 2.9.5 (já incluso no projeto)
 
 ## Requisitos
 
@@ -33,7 +34,6 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Servidor Web: Apache 2.4+
 - PHP 8.0 ou superior
 - MySQL 8.0 CE
-- Composer 2.9.5
 - Conexão com Internet (necessária para API do TMDB e envio de e-mails)
 - 
 ## Instalação
