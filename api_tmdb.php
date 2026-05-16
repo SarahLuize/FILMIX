@@ -235,7 +235,7 @@ function obterClassificacaoFilme($filme)
         '14A' => '14',
         '18A' => '18'
     ],
-    'MX' => [ //MEXICO
+    'MX' => [ //MÉXICO
         'A' => 'L',
         'AA' => '6',
         'B' => '12',
@@ -245,30 +245,75 @@ function obterClassificacaoFilme($filme)
 
     // ------ EUROPA ------
      'GB' => [ //REINO UNIDO
-        //
+        'U' => 'L',
+        'PG' => '10',
+        '12/A' => '12',
+        '12' => '12',
+        '15' => '16',
+        '18' => '18',
+        'R18' => 'Restrito'
     ],
     'DE' => [ //ALEMANHA
-        //
+        'FSK 0' => 'L',
+        'FSK 6' => '6',
+        'FSK 12' => '12',
+        'FSK 16' => '16',
+        'FSK 18' => '18',
+        'Infoprogramm' => 'L',
+        'Lehrprogramm' => 'L'
     ],
-    'IT' => [ //ITALIA
-        //
+    'IT' => [ //ITÁLIA
+        'T' => 'L',
+        '6+' => '6',
+        '10+' => '10',
+        '14+' => '14',
+        '18+' => '18'
     ],
     'FR' => [ //FRANÇA
-        //
+        'TP' => 'L',
+        '-12' => '12',
+        '-16' => '16',
+        '-18' => '18',
+        'X' => 'Restrito'
     ],
     'ES' => [ //ESPANHA
-        //
+        'A' => 'L',
+        'Ai' => 'L',
+        '7' => '10',
+        '7i' => '10', // Não adicionados o restante, porque são os mesmos do Brasil
+        'X' => 'Restrito'
     ],
     'PT' => [ //PORTUGAL
-        //
+        'Para todos os públicos' => 'L',
+        'M/3' => 'L',
+        'M/6' => '6',
+        'M/12' => '12',
+        'M/14' => '14',
+        'M/16' => '16',
+        'M/18' => '18',
+        'P' => 'Restrito'
     ],
     'NL' => [ //PAÍSES BAIXOS/HOLANDA
-        'AL' => 'L',
+        'AL' => 'L', // Não adicionados o restante, porque são os mesmos do Brasil
         '9' => '10'
     ],
+    'SE' => [ //SUÉCIA
+        'Btl' => 'L',
+        '7' => '10',
+        '11' => '12',
+        '15' => '16',
+        'Not Approved' => 'Restrito',
+    ],
+    'RU' => [ //RÚSSIA
+        '0+' => 'L',
+        '6+' => '6',
+        '12+' => '12',
+        '16+' => '16',
+        '18+' => '18'
+    ],
 
-    // ------ ÁSIA  ------
-    'IN' => [ //INDIA
+    // ------ ÁSIA ------
+    'IN' => [ //ÍNDIA
         'U'       => 'L',
         'UA'      => '12',
         'UA 7+'   => '10',
@@ -283,7 +328,13 @@ function obterClassificacaoFilme($filme)
         'R15+' => '16',
         'R18+' => '18'
     ],
-    'KR' => [ //COREIA DO SUL
+    'HK' => [ //HONG KONG
+        'I' => 'L',
+        'IIA' => '12',
+        'IIB' => '16',
+        'III' => '18'
+    ],
+    'KR' => [ //CORÉIA DO SUL
         'G' => 'L',
         '12' => '12',
         '15' => '16',
@@ -291,14 +342,52 @@ function obterClassificacaoFilme($filme)
         'Restricted Screening' => '18'
     ],
     'PH' => [ //FILIPINAS
-        //
+        'G' => 'L',
+        'PG' => '6',
+        'R-13' => '14',
+        'R-16' => '16',
+        'R-18' => '18',
+        'X' => 'Restrito'
     ],
+    'TW' => [ //TAIWAN
+        '0+' => 'L',
+        '6+' => '6',
+        '12+' => '12',
+        '15+' => '16',
+        '18+' => '18'
+    ],
+    'TH' => [ //TAILÂNDIA
+        'P' => 'L',
+        'G' => 'L',
+        '13' => '14',
+        '15' => '16',
+        '18' => '18',
+        '20' => 'Restrito',
+        'Banned' => 'Restrito'
+    ],
+    'TR' => [ //TURQUIA
+        'Genel' => 'L',
+        '6A' => 'L',
+        '6+' => '6',
+        '10A' => '10',
+        '10+' => '10',
+        '13A' => '14',
+        '13+' => '14',
+        '16+' => '16',
+        '18+' => '18',
+    ], 
 
     // ------ OCEANIA ------
-    'AU' => [ //AUSTRALIA
-        //
+    'AU' => [ //AUSTRÁLIA
+        'G' => 'L',
+        'PG' => '6',
+        'M' => '16',
+        'MA 15+' => '16',
+        'R 18+' => '18',
+        'X 18+' => 'Restrito',
+        'RC' => 'Restrito'
     ],
-    'NZ' => [ //NOVA ZELANDIA
+    'NZ' => [ //NOVA ZELÂNDIA
         'G' => 'L',
         'PG' => '6',
         'M' => '16',
@@ -309,7 +398,7 @@ function obterClassificacaoFilme($filme)
         'R15' => '16',
         'R16' => '16',
         'R18' => '18',
-        'R' => 'Filtrar'
+        'R' => 'Restrito'
     ],
 
     ];
@@ -318,27 +407,31 @@ function obterClassificacaoFilme($filme)
         foreach ($filme['release_dates']['results'] as $pais) {
 
             $codigoPais = $pais['iso_3166_1'] ?? null;
-
             if (!$codigoPais || empty($pais['release_dates'])) {
                 continue;
             }
-            if (!isset($pais['release_dates'][0]['certification'])) {
-                continue;
+
+            $certificacao = '';
+            foreach ($pais['release_dates'] as $lancamento) {
+                $cert = trim($lancamento['certification'] ?? '');
+                if($cert != '') {
+                    $certificacao = $cert;
+                    break;
+                }
             }
-             $certificacao = trim(
-                $pais['release_dates'][0]['certification'] ?? ''
-            );
+
             if ($certificacao === '') {
                 continue;
             }
-            //MOSTRA CLASSIFICAÇÃO
+
+            //BRASIL
+            if ($codigoPais === 'BR') {
+                return $certificacao;
+            }
+
+            //MOSTRA CLASSIFICAÇÃO DOS PÁISES
             if (isset($classificacoes[$codigoPais][$certificacao])) {
                 return $classificacoes[$codigoPais][$certificacao];
-            }
-            
-            //BRASIL
-            if ($codigoPais === 'BR' && !empty($certificacao)) {
-                return $certificacao;
             }
         }
     }
@@ -351,8 +444,6 @@ function obterClassificacaoFilme($filme)
     //SEM CLASSIFICAÇÃO DEFINIDA
     return 'Não Classificado';
 }
-
-
 
 function buscarFilmesPorNome($nomeFilme, $pagina = 1)
 {
