@@ -28,10 +28,6 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Composer 2.9.5
 
 ## Requisitos
-### Hardware (Mínimo)
-- Processador: Dual-core 2.0 GHz ou superior
-- Memória RAM: 4 GB
-- Espaço em Disco: ____
 
 ### Software
 - Servidor Web: Apache 2.4+
