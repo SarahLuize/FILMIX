@@ -96,7 +96,7 @@ if (isset($_SESSION['id_usuario'])) {
 
         .search-btn {
             background-color: #2a2a2a;
-            border: 1px solid #444;
+            border: 1px solid #6C757D;
             color: #fff;
             padding: 8px 15px;
             border-radius: 4px;
@@ -176,6 +176,18 @@ if (isset($_SESSION['id_usuario'])) {
                 text-align: center;
                 display: block;
             }
+        }
+
+        .footer {
+            background-color: #1a1a1a !important;
+        }
+
+        .footer-disclaimer {
+            color: #ccc !important;
+        }
+
+        a{
+            color: #ccc !important;
         }
     </style>
     <header class="header" style="background-color: #1a1a1a;">

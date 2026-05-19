@@ -100,7 +100,7 @@ if ($generoId > 0) {
 
         .search-btn {
             background-color: #2a2a2a;
-            border: 1px solid #444;
+            border: 1px solid #6C757D;
             color: #fff;
             padding: 8px 15px;
             border-radius: 4px;
