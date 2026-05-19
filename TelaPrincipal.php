@@ -64,7 +64,6 @@ $urlPaginaPopulares = function (int $p): string {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<!-- TelaPrincipal.PHP -->
 
 <body>
     <style>
@@ -113,7 +112,7 @@ $urlPaginaPopulares = function (int $p): string {
 
         .search-btn {
             background-color: #2a2a2a;
-            border: 1px solid #444;
+            border: 1px solid #6C757D;
             color: #fff;
             padding: 8px 15px;
             border-radius: 4px;
