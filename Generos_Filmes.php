@@ -50,7 +50,8 @@ $generos = buscarGeneros();
 
         .favoritos-poster {
             width: 100%;
-            aspect-ratio: 2/3;
+            display: grid;
+            aspect-ratio: 1587 / 2245; /* Dimensão da imagem (largura x altura) para não ficar cortada no card*/
             background: #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
@@ -60,7 +61,7 @@ $generos = buscarGeneros();
         .favoritos-poster img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: fill;
         }
 
         .favoritos-card-titulo {
@@ -88,6 +89,23 @@ $generos = buscarGeneros();
                 height: 150px;
             }
         }
+
+        .favoritos-poster img, .favoritos-poster span {
+            grid-area: 1/1;
+        }
+
+        .favoritos-poster span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        span {
+            color: #1a1a1a; /*Escolher uma cor para o texto do gênero */
+        }
+
+        
 
     </style>
 
@@ -162,7 +180,8 @@ $generos = buscarGeneros();
             <?php foreach ($generos['genres'] as $genero): ?>
                 <a href="BarraPesquisaFilme.php?genero_id=<?php echo $genero['id']; ?>&genero_nome=<?php echo urlencode($genero['name']); ?>">
                     <div class="favoritos-card">
-                        <div class="favoritos-poster" style="display: flex; align-items: center; justify-content: center;">
+                        <div class="favoritos-poster" style="align-items: center; justify-content: center;">
+                            <img src="img/cartaz-genero-filme.png" class="card-img h-100 w-100" alt="Cartaz de gênero do filme">
                             <span style="font-size: 18px; font-weight: bold;"><?php echo htmlspecialchars($genero['name']); ?></span>
                         </div>
                     </div>
