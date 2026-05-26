@@ -203,7 +203,8 @@ function buscarFilmePorId($filmeId)
 
 function obterClassificacaoFilme($filme)
 {
-
+    // Adaptação das classificações indicativas de alguns outros países para a classificação do Brasil
+    // caso a classificação brasileira de algum filme não tenha sido adicionada na API ainda 
     $classificacoes = 
     [
 
@@ -403,46 +404,44 @@ function obterClassificacaoFilme($filme)
 
     ];
 
-    if (isset($filme['release_dates']['results'])) {
-        foreach ($filme['release_dates']['results'] as $pais) {
+    if (!isset($filme['release_dates']['results'])) { //verifica se não tem a classificação do filme
+        // Já retorna 18 se tiver classificado como 'adulto' na API
+        if (isset($filme['adult']) && $filme['adult']) {
+            return '18';
+        }
+        //Se não, retorna não classificado
+        return 'Não Classificado';
+    }
 
-            $codigoPais = $pais['iso_3166_1'] ?? null;
-            if (!$codigoPais || empty($pais['release_dates'])) {
-                continue;
-            }
+    $BuscaClassificacao = $filme['release_dates']['results'];
 
-            $certificacao = '';
+    foreach ($BuscaClassificacao as $pais) { //Busca exclusivamente classificação do Brasil
+        if (($pais['iso_3166_1'] ?? null) === 'BR' && !empty($pais['release_dates'])) {
             foreach ($pais['release_dates'] as $lancamento) {
-                $cert = trim($lancamento['certification'] ?? '');
-                if($cert != '') {
-                    $certificacao = $cert;
-                    break;
+                $certificacao = trim($lancamento['certification'] ?? '');
+                if ($certificacao != ''){
+                    return $certificacao; //já retorna a classificação indicativa do Brasil
                 }
-            }
-
-            if ($certificacao === '') {
-                continue;
-            }
-
-            //BRASIL
-            if ($codigoPais === 'BR') {
-                return $certificacao;
-            }
-
-            //MOSTRA CLASSIFICAÇÃO DOS PÁISES
-            if (isset($classificacoes[$codigoPais][$certificacao])) {
-                return $classificacoes[$codigoPais][$certificacao];
             }
         }
     }
 
-    // Adulto TMDb
-    if (isset($filme['adult']) && $filme['adult']) {
-        return '18';
-    }
+    foreach ($BuscaClassificacao as $pais) {
+        $codigoPais = $pais['iso_3166_1'] ?? null;
+        if (($pais['iso_3166_1'] ?? null) === 'BR' || empty($pais['release_dates'])){
+            continue; //Pula a busca se for inválido ou se for 'BR' (já procurou antes)
+        }
 
-    //SEM CLASSIFICAÇÃO DEFINIDA
-    return 'Não Classificado';
+            foreach ($pais['release_dates'] as $lancamento) {
+            $certificacao = trim($lancamento['certification'] ?? '');
+            if($certificacao != '') {
+                if (isset($classificacoes[$codigoPais][$certificacao])) {
+                    return $classificacoes[$codigoPais][$certificacao];
+                }
+                break;
+            }
+        }
+    }
 }
 
 function buscarFilmesPorNome($nomeFilme, $pagina = 1)
