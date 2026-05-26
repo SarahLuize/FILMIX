@@ -248,7 +248,7 @@ function obterClassificacaoFilme($filme)
      'GB' => [ //REINO UNIDO
         'U' => 'L',
         'PG' => '10',
-        '12/A' => '12',
+        '12A' => '12',
         '12' => '12',
         '15' => '16',
         '18' => '18',
@@ -312,14 +312,22 @@ function obterClassificacaoFilme($filme)
         '16+' => '16',
         '18+' => '18'
     ],
+    'IE' => [
+        'G' => 'L',
+        'PG' => '10',
+        '12A' => '12',
+        '15A' => '16',
+        '16' => '16',
+        '18' => '18',
+    ],
 
     // ------ ÁSIA ------
     'IN' => [ //ÍNDIA
         'U'       => 'L',
-        'UA'      => '12',
-        'UA 7+'   => '10',
-        'UA 13+'  => '12',
-        'UA 16+'  => '16',
+        'U/A'      => '12',
+        'U/A 7+'   => '10',
+        'U/A 13+'  => '12',
+        'U/A 16+'  => '16',
         'A'       => '18',
         'S'       => '18'
     ],
@@ -377,6 +385,17 @@ function obterClassificacaoFilme($filme)
         '16+' => '16',
         '18+' => '18',
     ], 
+    'CN' => [ //CHINA
+        '' => 'L'
+    ],
+    'SG' => [ //SINGAPURA
+        'G'      => 'L',
+        'PG'     => '10',
+        'PG13'   => '12',
+        'NC16'   => '16',
+        'M18'    => '18',
+        'R21'    => '21'
+    ],
 
     // ------ OCEANIA ------
     'AU' => [ //AUSTRÁLIA
@@ -442,6 +461,8 @@ function obterClassificacaoFilme($filme)
             }
         }
     }
+
+    return 'Não Classificado';
 }
 
 function buscarFilmesPorNome($nomeFilme, $pagina = 1)
