@@ -10,7 +10,7 @@ function enviarEmailRecuperacao($emailDestino, $token, $nomeUsuario){
     $mail = new PHPMailer(true);
 
     try {
-        $mail->SMTPDebug = 1;
+        $mail->SMTPDebug = 0;
         $mail->CharSet = "UTF-8"; 
         $mail->isSMTP();
         $mail->Host     = 'smtp.gmail.com';

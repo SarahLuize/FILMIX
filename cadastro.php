@@ -65,7 +65,7 @@
             <div class="mb-3">
                 <label for="CadastroData" class="form-label">Data de Nascimento:</label>
                 <div class="date-input-wrapper">
-                    <input type="date" class="form-control" name="CadastroData" id="CadastroData" required>
+                    <input type="date" class="form-control" name="data_nascimento" id="CadastroData" required>
                 </div>
             </div>
 
