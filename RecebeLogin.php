@@ -30,11 +30,6 @@ if (empty($email) || empty($senha)) {
     $_SESSION['erro_login'] = 'Por favor, preencha todos os campos.';
     voltarParaLoginComRedirect($redirect);
 }
-if (empty($email) || empty($senha)) {
-    $_SESSION['erro_login'] = 'Por favor, preencha todos os campos.';
-    header('Location: login.php');
-    exit;
-}
 
 $usuario = buscarUsuarioAtivo($email);
 
@@ -42,27 +37,29 @@ if (!$usuario) {
     $_SESSION['erro_login'] = 'E-mail não cadastrado no sistema ou não validado. Por favor, cadastre-se para continuar.';
     voltarParaLoginComRedirect($redirect);
 }
-
 if (!password_verify($senha, $usuario['senha'])) {
     $_SESSION['erro_login'] = 'Senha incorreta. Tente novamente.';
-    voltarParaLoginComRedirect($redirect);
+    voltarParaLoginComRedirect($redirect);	
 	
-	if (!$usuario) {
-    $_SESSION['erro_login'] = 'E-mail não encontrado ou conta aguardando ativação. Verifique sua caixa de entrada.';    
-    header('Location: login.php');
-    exit;
-}
-
-if (!password_verify($senha, $usuario['senha'])) {
-    $_SESSION['erro_login'] = 'Senha incorreta. Tente novamente.';
-    header('Location: login.php');
-    exit;
-}
 }
 
 $_SESSION['id_usuario'] = $usuario['id_usuario'];
 $_SESSION['nome_usuario'] = $usuario['nome'];
 $_SESSION['email_usuario'] = $usuario['email'];
+
+// Cálculo automático da idade do usuário no login
+if(!empty($usuario['data_nascimento'])) {
+    $nascimento = new DateTime($usuario['data_nascimento']);
+    $hoje = new DateTime();
+
+    $idade = $hoje->diff($nascimento)->y; // Calcula a diferência exata em anos
+
+    $_SESSION['idade_usuario'] = $idade;
+    $_SESSION['usuario_data_nascimento'] = $usuario['data_nascimento'];
+}else{
+    $_SESSION['idade_usuario'] = 0;
+    $_SESSION['usuario_data_nascimento'] = null;
+}
 
 unset($_SESSION['erro_login']);
 

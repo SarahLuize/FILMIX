@@ -13,17 +13,29 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0) {
+function obterDataNascimentoUsuario($idUsuario){
+    $link = obterConexao();
+
+    if(!$link) return null;
+
+    $stmt = $link->prepare("SELECT data_nascimento FROM usuario WHERE id_usuario= ?");
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+    $usuario = $resultado->fetch_assoc();
+
+    return $usuario ? $usuario['data_nascimento'] : null;
+}
+
+function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0, $data_nascimento) {
     $conn = obterConexao();
     
     
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-    $query = "INSERT INTO usuario (nome, email, senha, token, validade, situacao) 
-    VALUES (?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
-    /*
-    $query = "INSERT INTO usuario (nome, email, senha, token, validade, situacao) 
-    VALUES (?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 24 HOUR), ?)";
-    */
+    $query = "INSERT INTO usuario (nome, email, senha, data_nascimento, token, validade, situacao) 
+    VALUES (?, ?, ?, ?, ?,  DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
+    
     $stmt = mysqli_prepare($conn, $query);
 
     //Validação para teste de 5 minutos
@@ -31,7 +43,7 @@ function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0) {
         return['sucesso' => false, 'erro' => 'Erro ao preparar consulta: '. mysqli_error($conn)];
     }
     //<-
-    mysqli_stmt_bind_param($stmt, 'ssssi', $nome, $email, $senhaHash, $token, $situacao);
+    mysqli_stmt_bind_param($stmt, 'sssssi', $nome, $email, $senhaHash, $data_nascimento, $token, $situacao);
     
     $resultado = [];
     if(mysqli_stmt_execute($stmt)){
@@ -536,3 +548,4 @@ function salvaTokenRecuperacao($email, $token, $validade){
     return mysqli_stmt_execute($stmt);
     
 }
+

@@ -13,7 +13,7 @@ $nome = isset($_POST['CadastroNome']) ? trim($_POST['CadastroNome']) : '';
 $email = isset($_POST['CadastroEmail']) ? trim($_POST['CadastroEmail']) : '';
 $senha = isset($_POST['CadastroSenha']) ? $_POST['CadastroSenha'] : '';
 $senhaConfirmar = isset($_POST['CadastroSenhaConfirmar']) ? $_POST['CadastroSenhaConfirmar'] : '';
-$dataNascimento = isset($_POST['CadastroData']) ? $_POST['CadastroData'] : '';
+$data_nascimento = isset($_POST['data_nascimento']) ? $_POST['data_nascimento'] : null;
 
 if (empty($nome) || empty($email) || empty($senha) || empty($senhaConfirmar)) {
     $_SESSION['erro_cadastro'] = 'Por favor, preencha todos os campos obrigatórios.';
@@ -57,10 +57,9 @@ if ($usuarioExistente) {
 $token = bin2hex(random_bytes(16));
 
  // Caso queira testar pouquíssimos minutos
-$validade = date('Y-m_d H:i:s', strtotime('+3 minutes'));
-$resultado = inserirUsuario($nome, $email, $senha, $token, 0, $validade);
+ //$validade = date('Y-m_d H:i:s', strtotime('+3 minutes'));
+$resultado = inserirUsuario($nome, $email, $senha, $token, 0, $data_nascimento);
 
-//$resultado = inserirUsuario($nome, $email, $senha, $token, 0);
 
 if ($resultado['sucesso']) {
     //Tentar enviar o e-mail primeiro

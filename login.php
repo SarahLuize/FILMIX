@@ -9,8 +9,15 @@ if (isset($_SESSION['id_usuario'])) {
 
 $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : '';
 $erroLogin = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : '';
-$sucessoCadastro = isset($_SESSION['sucesso_cadastro']) ? $_SESSION['sucesso_cadastro'] : '';
-unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro']);
+
+$sucessoCadastro = '';
+if(isset($_SESSION['sucesso_cadastro'])){
+ $sucessoCadastro = $_SESSION['sucesso_cadastro'];
+}elseif(isset($_SESSION['sucesso_login'])){
+    $sucessoCadastro = $_SESSION['sucesso_login'];
+}
+// limpar todas as variaveis da sessão para não repetirem no F5
+unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro'], $_SESSION['erro_login']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
