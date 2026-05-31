@@ -29,6 +29,20 @@ if(empty($token)){
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 <body>
+
+    <div class="mt-5 margem-t">
+        <div class="logo-placeholder logo-pequena">
+            <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
+        </div>
+
+        <div class="banner-placeholder placeholder-box pt-xxl-5">
+            <div class="logos-img mt-xxl-5">
+                <img src="img/recuperacao-senha.png" alt="RECUPERAÇÃO DE SENHA logo" class="logo-login mt-xxl-5">
+            </div>
+        </div>
+    </div>
+
+    <br><br>
     <div class="cadastro-container mt-5">
         <h4 class="text-center">Crie sua nova senha</h4>
         <br>
@@ -50,6 +64,7 @@ if(empty($token)){
             </div>
         </form>
     </div>
+    <br><br>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
