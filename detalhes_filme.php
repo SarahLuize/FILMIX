@@ -5,14 +5,14 @@ require_once 'db_funcoes.php';
 
 $filmeId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-if ($filmeId <= 0) {
+if($filmeId <= 0){
     header('Location: TelaPrincipal.php');
     exit;
 }
 
 $filme = buscarFilmePorId($filmeId);
 
-if (isset($filme['erro'])) {
+if(isset($filme['erro'])){
     header('Location: TelaPrincipal.php');
     exit;
 }
@@ -22,12 +22,39 @@ $titulo = htmlspecialchars($filme['title']);
 $sinopse = htmlspecialchars($filme['overview']);
 $classificacao = obterClassificacaoFilme($filme);
 
+$idUsuarioLogado = isset($_SESSION['id_usuario']) ? (int)$_SESSION['id_usuario'] : null;
+$idadeUsuario = isset($_SESSION['idade_usuario']) ? (int)$_SESSION['idade_usuario'] : 0;
+
+if($idUsuarioLogado > 0 && $idadeUsuario <=0){
+    if(function_exists('obterDataNascimentoUsuario')){
+    $dataNascimento = obterDataNascimentoUsuario($idUsuarioLogado);
+
+    if(!empty($dataNascimento)){
+        $nascimento = new DateTime($dataNascimento);
+        $hoje = new DateTime();
+        $idadeUsuario = $hoje->diff($nascimento)->y;
+
+        $_SESSION['idade_usuario'] = $idadeUsuario;
+        $_SESSION['usuario_data_nascimento'] = $dataNascimento;
+    }
+ }
+}
+
+$filmeEhParaMaiores = ($classificacao === '18' || $classificacao ==='18+' || $classificacao ==='+18' || $classificacao === 'Restrito');
+
+$podeInteragir = true;
 $estaFavorito = false;
 $estaAssistirMaisTarde = false;
-if (isset($_SESSION['id_usuario'])) {
-    $estaFavorito = ehFavorito((int) $_SESSION['id_usuario'], $filmeId);
-    $estaAssistirMaisTarde = ehAssistirMaisTarde((int) $_SESSION['id_usuario'], $filmeId);
+
+if($idUsuarioLogado){
+    $estaFavorito = ehFavorito($idUsuarioLogado, $filmeId);
+    $estaAssistirMaisTarde = ehAssistirMaisTarde($idUsuarioLogado, $filmeId);
+
+    if($filmeEhParaMaiores && $idadeUsuario < 18){
+        $podeInteragir = false;
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -96,7 +123,6 @@ if (isset($_SESSION['id_usuario'])) {
 
         .search-btn {
             background-color: #2a2a2a;
-            border: 1px solid #6C757D;
             color: #fff;
             padding: 8px 15px;
             border-radius: 4px;
@@ -253,6 +279,7 @@ if (isset($_SESSION['id_usuario'])) {
             </div>
         </nav>
     </header>
+
     <main class="main-content">
         <div class="filme-container">
             <div class="poster-container">
@@ -264,13 +291,21 @@ if (isset($_SESSION['id_usuario'])) {
                         <span style="color: #999;">Sem imagem</span>
                     <?php endif; ?>
                 </div>
-                <div class="poster-actions">
+                <!-- Onde entra os botões com proteção da idade -->
+                <div class="poster-actions"> 
+                    <?php if($podeInteragir): ?>
                     <button type="button" class="poster-action-icon poster-action-btn js-favorito" data-id-tmdb="<?php echo $filmeId; ?>" title="<?php echo $estaFavorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'; ?>" aria-label="Favoritar">
                         <i class="bi bi-star<?php echo $estaFavorito ? '-fill' : ''; ?>"></i>
                     </button>
                     <button type="button" class="poster-action-icon poster-action-btn js-assistir-mais-tarde" data-id-tmdb="<?php echo $filmeId; ?>" title="<?php echo $estaAssistirMaisTarde ? 'Remover de Assistir mais Tarde' : 'Adicionar a Assistir mais Tarde'; ?>" aria-label="Assistir mais Tarde">
                         <i class="bi bi-clock<?php echo $estaAssistirMaisTarde ? '-fill' : ''; ?>"></i>
                     </button>
+                    <?php else: ?>
+                        <!-- Mensagem exibida para o usuário menor de idade-->
+                            <span class="badge bg-danger p-2" title="Recusos desativados para menores de 18 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+18)
+                        </span>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -303,7 +338,8 @@ if (isset($_SESSION['id_usuario'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         (function() {
-            var logado = <?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>;
+            // Se não puder interagir por conta da idade, o JS trava como "não logado" para trabar o clique
+            var logado = <?php echo (isset($_SESSION['id_usuario']) && $podeInteragir) ? 'true' : 'false'; ?>;
             var btnFav = document.querySelector('.js-favorito');
             var btnClock = document.querySelector('.js-assistir-mais-tarde');
 
