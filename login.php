@@ -34,7 +34,7 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro'], $_SESSION['erro_lo
 <body>
     <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
-            <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+            <a href="TelaPrincipal.php" title="Ir para tela principal"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
     <div class="banner-container-logos">

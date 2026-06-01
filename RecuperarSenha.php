@@ -21,7 +21,7 @@
     ?>
     <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
-            <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
+            <a href="login.php" title="Voltar para o login"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
         <div class="banner-placeholder placeholder-box pt-xxl-5">

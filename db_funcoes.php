@@ -506,7 +506,7 @@ function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->Port       = 587;
         $mail->Username   = 'filmix.oficial@gmail.com'; 
-        $mail->Password   = '' ; // 16 dígitos do Google
+        $mail->Password   = $SENHA_SMTP ; // 16 dígitos do Google
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPAuth   = true;
         

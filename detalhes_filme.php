@@ -221,7 +221,7 @@ if($idUsuarioLogado){
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="TelaPrincipal.php">
+                <a class="navbar-brand" href="TelaPrincipal.php" title="Voltar para a página principal">
                     <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
                 </a>
 
