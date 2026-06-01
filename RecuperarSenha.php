@@ -24,11 +24,11 @@
             <a href="TelaPrincipal.php"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img img-fluid" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
-    <div class="banner-placeholder placeholder-box pt-xxl-5">
-        <div class="logos-img mt-xxl-5">
-            <img src="img/esqueci-senha-logo.png" alt="ESQUECI MINHA SENHA logo" class="logo-login mt-xxl-5">
+        <div class="banner-placeholder placeholder-box pt-xxl-5">
+            <div class="logos-img mt-xxl-5">
+                <img src="img/esqueci-senha-logo.png" alt="ESQUECI MINHA SENHA logo" class="logo-login mt-xxl-5">
+            </div>
         </div>
-    </div>
     </div>
 
     <br><br><br><br>
