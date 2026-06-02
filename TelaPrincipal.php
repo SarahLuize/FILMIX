@@ -665,7 +665,7 @@ $urlPaginaPopulares = function (int $p): string {
             <div class="recomendados-container">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn" onclick="scrollCarouselRecomendados('left')">‹</button>
-                    <div class="movies-grid" id="gridRecomendados">
+                    <div class="movies-grid" id="carouselRecomendados">
                         <?php
                         $filmesRecomendados = array_slice($recomendados['results'], 0, 10);
                         foreach ($filmesRecomendados as $filme) {
@@ -829,7 +829,45 @@ $urlPaginaPopulares = function (int $p): string {
 
         const carousel = document.getElementById('carouselLancamentos');
         carousel.addEventListener('scroll', updateFeatured);
-        updateFeatured();
+
+
+        function scrollCarouselRecomendados(direction) {
+            const carousel = document.getElementById('carouselRecomendados');
+            const scrollAmount = 250;
+
+            if (direction === 'left') {
+                carousel.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                carousel.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+            setTimeout(updateFeatured, 350);
+        }
+
+        function scrollCarouselRecomendados(direction) {
+            const carousel = document.getElementById('carouselRecomendados');
+            const poster = carousel.querySelector('.movie-poster');
+            const scrollAmount = poster ? poster.offsetWidth + 20 : 250; // largura real + gap
+
+            if (direction === 'left') {
+                carousel.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                carousel.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+            setTimeout(updateFeatured, 350);
+        }
+            updateFeatured();
     </script>
 </body>
 
