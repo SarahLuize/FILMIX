@@ -114,7 +114,7 @@ $generos = buscarGeneros();
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="TelaPrincipal.php">
+                <a class="navbar-brand" href="TelaPrincipal.php" title="Ir para página principal">
                     <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
                 </a>
 
