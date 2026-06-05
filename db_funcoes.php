@@ -28,12 +28,12 @@ function obterDataNascimentoUsuario($idUsuario){
     return $usuario ? $usuario['data_nascimento'] : null;
 }
 
-function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0, $data_nascimento) {
+function inserirUsuario($nome, $email, $data_nascimento, $senha, $token = null, $situacao = 0) {
     $conn = obterConexao();
     
     
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-    $query = "INSERT INTO usuario (nome, email, senha, data_nascimento, token, validade, situacao) 
+    $query = "INSERT INTO usuario (nome, email, data_nascimento, senha, token, validade, situacao) 
     VALUES (?, ?, ?, ?, ?,  DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
     
     $stmt = mysqli_prepare($conn, $query);
@@ -43,7 +43,7 @@ function inserirUsuario($nome, $email, $senha, $token = null, $situacao = 0, $da
         return['sucesso' => false, 'erro' => 'Erro ao preparar consulta: '. mysqli_error($conn)];
     }
     //<-
-    mysqli_stmt_bind_param($stmt, 'sssssi', $nome, $email, $senhaHash, $data_nascimento, $token, $situacao);
+    mysqli_stmt_bind_param($stmt, 'sssssi', $nome, $email, $data_nascimento, $senhaHash, $token, $situacao);
     
     $resultado = [];
     if(mysqli_stmt_execute($stmt)){
@@ -506,7 +506,7 @@ function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->Port       = 587;
         $mail->Username   = 'filmix.oficial@gmail.com'; 
-        $mail->Password   = '' ; // 16 dígitos do Google
+        $mail->Password   = $SENHA_SMTP ; // 16 dígitos do Google
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPAuth   = true;
         

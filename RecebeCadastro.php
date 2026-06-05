@@ -58,7 +58,7 @@ $token = bin2hex(random_bytes(16));
 
  // Caso queira testar pouquíssimos minutos
  //$validade = date('Y-m_d H:i:s', strtotime('+3 minutes'));
-$resultado = inserirUsuario($nome, $email, $senha, $token, 0, $data_nascimento);
+$resultado = inserirUsuario($nome, $email, $data_nascimento, $senha, $token, 0);
 
 
 if ($resultado['sucesso']) {

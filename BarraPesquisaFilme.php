@@ -285,7 +285,7 @@ if ($generoId > 0) {
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="TelaPrincipal.php">
+                <a class="navbar-brand" href="TelaPrincipal.php" title="Voltar para a página principal">
                     <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
                 </a>
 
@@ -389,14 +389,22 @@ if ($generoId > 0) {
                 <?php if ($totalPaginas > 1): ?>
                     <div class="paginacao">
                         <?php if ($pagina > 1): ?>
+                            <?php if (isset($_GET['genero_id'])): ?> <!-- Verifica se é pesquisa por gênero de filme (Generos_Filmes.php) -->
+                                <a href="?genero_id=<?php echo $_GET['genero_id']; ?>&genero_nome=<?php echo ($_GET['genero_nome'])?>&page=<?php echo ($pagina - 1); ?>">‹ Anterior</a>
+                            <?php endif; ?> <!-- ^ Vai adicionar essa URL quando clica no botão 'anterior' -->
+                        <?php else: ?>    
                             <a href="?s=<?php echo urlencode($termoPesquisa); ?>&page=<?php echo ($pagina - 1); ?>">‹ Anterior</a>
-                        <?php endif; ?>
+                        <?php endif; ?> <!-- ^ Se não, procurar por essa URL de pesquisa normal -->
 
                         <span class="pagina-atual">Página <?php echo $pagina; ?> de <?php echo $totalPaginas; ?></span>
 
                         <?php if ($pagina < $totalPaginas): ?>
+                            <?php if (isset($_GET['genero_id'])): ?> <!-- Verifica se é pesquisa por gênero de filme (Generos_Filmes.php) -->
+                                <a href="?genero_id=<?php echo $_GET['genero_id']; ?>&genero_nome=<?php echo ($_GET['genero_nome'])?>&page=<?php echo ($pagina + 1); ?>">Próxima ›</a>
+                            <?php endif; ?> <!-- ^ Vai procurar por essa URL quando clica no botão 'próximo' -->
+                        <?php else: ?>    
                             <a href="?s=<?php echo urlencode($termoPesquisa); ?>&page=<?php echo ($pagina + 1); ?>">Próxima ›</a>
-                        <?php endif; ?>
+                        <?php endif; ?> <!-- ^ Se não, procura por essa URL de pesquisa normal -->
                     </div>
                 <?php endif; ?>
             <?php else: ?>

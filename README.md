@@ -13,10 +13,15 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Adicionar filmes a lista de assistir mais tarde
 - Recomendações personalizadas baseadas nos favoritos
 - Navegação por gêneros para facilitar a busca por filmes específicos
-- Filtro por idade (em breve)
+- Restrição por idade (usuários menores de 18 anos não podem favoritar ou adicionar à lista de assistir mais tarde filmes com classificação indicativa 18)
 
 ## Como usar
-(Adicionar)
+1. Criar uma conta e confirmar o e-mail para concluir o cadastro
+2. Fazer login
+3. Pesquisar filmes pela barra de busca ou navegar por gêneros
+4. Clicar em um filme para ver detalhes (sinopse, classificação, pôster)
+5. Favoritar filmes ou adicioná-los à lista de assistir mais tarde
+6. Voltar à página principal para ver as recomendações baseadas nos seus favoritos
 
 ## Tecnologias utilizadas
 - PHP 8.0
@@ -50,7 +55,8 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 6. Acesse `localhost/FILMIX` no navegador
 
 ## Autores
-(Adicionar)
+- [@Sarah L. M.](https://www.github.com/SarahLuize)
+- [@Joel M. S.](https://github.com/jmsifsc)
 
 ## Contribuições
 (Adicionar)
