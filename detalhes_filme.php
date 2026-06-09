@@ -314,7 +314,7 @@ if($idUsuarioLogado){
                 <h1 class="filme-titulo"><?php echo $titulo; ?></h1>
 
                 <p class="filme-sinopse">
-                    <?php echo !empty($sinopse) ? $sinopse : 'Sinopse não disponível.'; ?>
+                    <?php echo !empty($sinopse) ? $sinopse : 'Sinopse não disponível. Este filme pode não ter sinopse em português ou ainda não foi cadastrada.'; ?>
                 </p>
 
                 <div class="classificacao-label">classificação</div>
