@@ -13,7 +13,7 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Adicionar filmes a lista de assistir mais tarde
 - Recomendações personalizadas baseadas nos favoritos
 - Navegação por gêneros para facilitar a busca por filmes específicos
-- Restrição por idade (usuários menores de 18 anos não podem favoritar ou adicionar à lista de assistir mais tarde filmes com classificação indicativa 18)
+- Restrição por idade (usuários menores de 18 anos não podem favoritar ou adicionar à lista de assistir mais tarde filmes com classificação indicativa de 18 anos)
 
 ## Como usar
 1. Criar uma conta e confirmar o e-mail para concluir o cadastro
@@ -30,29 +30,35 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Bootstrap 5
 - MySQL 8.0
 - API TMDB v3
-- PHPMailer 6.0
-- Composer 2.9.5 (já incluso no projeto)
+- Composer (gerenciamento de dependências)
+- PHPMailer (via Composer)
 
 ## Requisitos
 
 ### Software
-- Servidor Web: Apache 2.4+
-- PHP 8.0 ou superior
+- Apache 2.4+
+- PHP 8.0+
 - MySQL 8.0 CE
-- Conexão com Internet (necessária para API do TMDB e envio de e-mails)
-- 
+- Conexão com Internet (API TMDB e envio de e-mails)
+- Composer (gerenciamento de dependências)
+  
 ## Instalação
 1.  Baixe e instale o XAMPP 3.3.0
 2. Configure o `php.ini`:
    * Habilite `extension=openssl` e `extension=mbstring`
    * Localize a segunda ocorrência de `date.timezone` e altere para `America/Sao_Paulo`
-   * Salve o arquivo e clique em Start no Apache e MySQL
+   * Salve o arquivo e inicie o servidor Apache e o MySQL
 3. Clone o repositório ou baixe a pasta do projeto
 4. Copie a pasta `FILMIX` para `C:\xampp\htdocs\filmix`
 5. Importe o arquivo `banco.sql`:
-   * Via phpMyAdmin: acesse `localhost/phpmyadmin` e importe o arquivo  
-   * Via MySQL Workbench: crie uma nova conexão e execute o `banco.sql`  
-6. Acesse `localhost/FILMIX` no navegador
+   * Via phpMyAdmin: acesse `localhost/phpmyadmin` e importe o arquivo `banco.sql` 
+   * Via MySQL Workbench: crie uma nova conexão e execute o `banco.sql`
+6. Antes de executar o projeto, instale o [Composer](https://getcomposer.org/download).
+7. Dentro da pasta do projeto, execute:
+   ```bash
+   composer install
+Isso irá instalar todas as dependências do projeto, incluindo o PHPMailer.
+8. Acesse no navegador: `http://localhost/FILMIX`
 
 ## Autores
 - [@Sarah L. M.](https://www.github.com/SarahLuize)
