@@ -521,16 +521,33 @@ function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
         $mail->Subject = 'Ative sua conta no Filmix';
         $mail->Body    = "<h1>Olá, $nomeUsuario!</h1>
                           <p>Clique no link abaixo para validar seu cadastro:</p>
-                          <a href='http://localhost/filmix/validaEmail.php?token=$token'>ATIVAR MINHA CONTA</a>";
-
+        $mail->Body    = "<h1>Olá, " . htmlspecialchars($nomeUsuario) . "!</h1>
+                  <p>Obrigado por se cadastrar no FILMIX. Clique no botão abaixo para validar seu cadastro e ativar sua conta:</p>
+                  <br>
+                  <a href='http://localhost/filmix/validaEmail.php?token=$token' 
+                     style='background-color: #28a745; 
+                            color: #ffffff !important; 
+                            text-decoration: none; 
+                            padding: 12px 25px; 
+                            border-radius: 5px; 
+                            font-weight: bold; 
+                            display: inline-block;
+                            font-family: Arial, sans-serif;'>
+                     ATIVAR MINHA CONTA
+                  </a>
+                  <br><br>
+                    <p>Este link expira em 30 minutos.</p>
+                    <p>Se não foi você quem solicitou, ignore este e-mail</p>
+                  <br>
+                 ";
+       
         $mail->AltBody = "Olá, $nomeUsuario! Para ativar sua conta, copie e cole o link no navegador: http://localhost/filmix/validaEmail.php?token=$token";
         $mail->send();
             echo "E-mail enviado com sucesso!";
         return true;
 
         } catch (Exception $e) {
-        echo "Erro detalhado com PHPMailer: {$mail->ErrorInfo}";
-        //error_log("Erro ao enviar e-mail: {$mail->ErrorInfo}");
+        echo "Erro detalhado com PHPMailer: {$mail->ErrorInfo}";        
         return false;
     }
         
