@@ -36,6 +36,56 @@ foreach ($idsLista as $idTmdb) {
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
     <style>
+        body{
+            background-color: #302D2A;
+        }
+
+        .header {
+            padding: 20px 40px;
+            background-color: #1a1a1a;
+            border-bottom: #1a1a1a;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            background-color: #2a2a2a;
+            border: 1px solid #6C757D;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+        .user-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #2a2a2a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
         /* Tamanho para Telas Pequenas (Celular) */
         .logo-filmix {
             height: 100px;
@@ -54,7 +104,7 @@ foreach ($idsLista as $idTmdb) {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 24px;
-            color: #333;
+            color: #C4C4C4;
         }
 
         .lista-grid {
@@ -94,20 +144,34 @@ foreach ($idsLista as $idTmdb) {
         }
 
         .lista-vazio {
-            color: #666;
+            color: #BDBDBD;
             font-size: 16px;
             padding: 40px 0;
         }
+
+        .footer {
+            background-color: #1a1a1a;
+            border: #1a1a1a;
+        }
+
+        .footer-disclaimer {
+            color: #A6A6A6;
+        }
+
+        .footer-links a{
+            color: #A6A6A6;
+        }
+        
     </style>
 </head>
 
 <body>
 
-    <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-light">
+    <header class="header" style="background-color: #1a1a1a;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="TelaPrincipal.php" title="Ir para página principal">
+                <a class="navbar-brand" href="TelaPrincipal.php">
                     <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
                 </a>
 
@@ -119,27 +183,27 @@ foreach ($idsLista as $idTmdb) {
 
                     <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
                         <div class="input-group">
-                            <input type="search" name="s" class="form-control search-input" placeholder="Pesquise seu filme...">
-                            <button type="submit" class="btn search-btn">
+                            <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
+                            <button type="submit" class="search-btn">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
                     </form>
 
-                    <ul class="navbar-nav ms-auto align-items-left">
+                    <ul class="navbar-nav ms-auto align-items-start">
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                            <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="favoritos.php">Favoritos</a>
+                            <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 text-black" href="Generos_Filmes.php">Gêneros</a>
+                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
                         </li>
 
                         <li class="nav-item dropdown ms-lg-2">
                             <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #000;"></i>
+                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #fff;"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
                                 <li>
@@ -149,6 +213,7 @@ foreach ($idsLista as $idTmdb) {
                                             ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
                                         ?>
                                     </span>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

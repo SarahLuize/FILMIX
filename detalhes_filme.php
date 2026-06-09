@@ -84,6 +84,7 @@ if($idUsuarioLogado){
         .header {
             padding: 20px 40px;
             background-color: #1a1a1a;
+            border-bottom: #1a1a1a;
         }
 
         /* Tamanho para telas pequenas */
@@ -132,6 +133,7 @@ if($idUsuarioLogado){
 
         .footer {
             background-color: #1a1a1a !important;
+            border: #1a1a1a;
         }
 
         .footer-disclaimer {
