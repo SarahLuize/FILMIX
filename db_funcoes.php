@@ -519,8 +519,6 @@ function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
         // Conteúdo
         $mail->isHTML(true);
         $mail->Subject = 'Ative sua conta no Filmix';
-        $mail->Body    = "<h1>Olá, $nomeUsuario!</h1>
-                          <p>Clique no link abaixo para validar seu cadastro:</p>
         $mail->Body    = "<h1>Olá, " . htmlspecialchars($nomeUsuario) . "!</h1>
                   <p>Obrigado por se cadastrar no FILMIX. Clique no botão abaixo para validar seu cadastro e ativar sua conta:</p>
                   <br>
