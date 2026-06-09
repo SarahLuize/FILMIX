@@ -61,6 +61,7 @@ if ($generoId > 0) {
         .header {
             padding: 20px 40px;
             background-color: #1a1a1a;
+            border-bottom: #1a1a1a;
         }
 
         /* Tamanho para Telas Pequenas (Celular) */
