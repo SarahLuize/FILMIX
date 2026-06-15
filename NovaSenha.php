@@ -66,6 +66,14 @@ if(empty($token)){
         </form>
     </div>
     <br><br>
+    <div class="footer">
+        <div class="TMDB-logo">
+            <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
+        </div>
+        <div class="footer-disclaimer">
+            <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
+        </div>
+    </div>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
