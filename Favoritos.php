@@ -35,25 +35,15 @@ foreach ($idsFavoritos as $idTmdb) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
-    <style>
-        body{
-            background-color: #302D2A;
-        }
+    <link rel="stylesheet" href="css/modo-noturno.css">
 
+    <style>
         .header {
             padding: 20px 40px;
             background-color: #1a1a1a;
-            border-bottom: #1a1a1a;
-        }
-
-        .search-input::placeholder {
-            color: #999;
         }
 
         .search-btn {
-            background-color: #2a2a2a;
-            border: 1px solid #6C757D;
-            color: #fff;
             padding: 8px 15px;
             border-radius: 4px;
             cursor: pointer;
@@ -66,19 +56,13 @@ foreach ($idsFavoritos as $idTmdb) {
         }
 
         .nav-links a {
-            color: #fff;
             text-decoration: none;
             font-size: 14px;
-        }
-
-        .nav-links a:hover {
-            color: #ccc;
         }
 
         .user-icon {
             width: 35px;
             height: 35px;
-            background-color: #2a2a2a;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -90,7 +74,6 @@ foreach ($idsFavoritos as $idTmdb) {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 24px;
-            color: #C4C4C4;
         }
 
         .favoritos-grid {
@@ -111,10 +94,8 @@ foreach ($idsFavoritos as $idTmdb) {
         .favoritos-poster {
             width: 100%;
             aspect-ratio: 2/3;
-            background: #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
-            border: 2px solid #ddd;
         }
 
         .favoritos-poster img {
@@ -130,7 +111,6 @@ foreach ($idsFavoritos as $idTmdb) {
         }
 
         .favoritos-vazio {
-            color: #BDBDBD;
             font-size: 16px;
             padding: 40px 0;
         }
@@ -148,20 +128,6 @@ foreach ($idsFavoritos as $idTmdb) {
                 height: 150px;
             }
         }
-
-        .footer {
-            background-color: #1a1a1a;
-            border: #1a1a1a;
-        }
-
-        .footer-disclaimer {
-            color: #A6A6A6;
-        }
-
-        .footer-links a{
-            color: #A6A6A6;
-        }
-
     </style>
 
     <body>
