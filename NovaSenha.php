@@ -27,6 +27,7 @@ if(empty($token)){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/cadastro.css">
+
 </head>
 <body>
 
@@ -44,7 +45,7 @@ if(empty($token)){
 
     <br><br>
     <div class="cadastro-container mt-5">
-        <h4 class="text-center">Crie sua nova senha</h4>
+        <h4 class="text-center rec-senha-h4">Crie sua nova senha</h4>
         <br>
         <form action="AtualizarSenha.php" method="post">
             <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">

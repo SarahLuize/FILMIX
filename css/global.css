@@ -20,12 +20,6 @@ body {
     font-weight: 500;
 }
 
-.btn-entrar:hover,
-.btn-cadastrar:hover {
-    background-color: #5a6268;
-    color: #fff;
-}
-
 .user-icon {
     width: 35px;
     height: 35px;
@@ -189,7 +183,6 @@ body {
 .form-label {
     font-weight: 500;
     margin-bottom: 8px;
-    color: #333;
 }
 
 .form-control {

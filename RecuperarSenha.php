@@ -32,7 +32,7 @@
     </div>
 
     <br><br><br><br>
-    <h4 style="text-align: center;">Por favor, confirme o email fornecido no cadastro</h4>
+    <h4 style="text-align: center;" class="rec-senha-h4">Por favor, confirme o email fornecido no cadastro</h4>
     <br><br>
     <div class="cadastro-container">
         <?php if (!empty($erroCadastro)): ?>

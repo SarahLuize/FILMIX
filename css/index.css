@@ -1,5 +1,5 @@
 body {
-    background-color: #ffffff;
+    background-color: #999999 !important;
     position: relative;
 }
 
@@ -39,8 +39,8 @@ body {
 }
 
 .btn-entrar:hover {
-    background-color: #5a6268;
-    color: #fff;
+    background-image: linear-gradient(to right, #BF0413 , #F25C05);
+    color: #fff;    
 }
 
 /*------------------------------------------------------------------- */
@@ -48,20 +48,29 @@ body {
 .criar-conta-link {
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: #2F2F2F;
 }
 
 .criar-conta-link a {
     text-decoration: underline;
-    color: #333;
+    color: #4A1F1F;
+}
+
+.criar-conta-link a:hover {
+    color: #7A2E2E;
+}
+
+.form-label {
+    color: #2F2F2F;
 }
 
 /*-------------------- */
 /*       FOOTER       */
 .footer {
-    background-color: #f5f5f5;
+    background-color: #666A70 !important;
+    border-top-color: #999999 !important;
 }
 
 .footer-disclaimer {
-    color: #666;
+    color: #ECECEC;
 }
