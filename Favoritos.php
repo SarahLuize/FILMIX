@@ -36,6 +36,7 @@ foreach ($idsFavoritos as $idTmdb) {
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/detalhes.css">
     <link rel="stylesheet" href="css/modo-noturno.css">
+    <link rel="stylesheet" href="css/autocomplete.css">
 
     <style>
         .header {
@@ -129,114 +130,123 @@ foreach ($idsFavoritos as $idTmdb) {
             }
         }
     </style>
+</head>
 
-    <body>
-        <header class="header" style="background-color: #1a1a1a;">
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <div class="container-fluid">
+<body>
+    <header class="header" style="background-color: #1a1a1a;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
 
-                    <a class="navbar-brand" href="TelaPrincipal.php">
-                        <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
-                    </a>
+                <a class="navbar-brand" href="TelaPrincipal.php">
+                    <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
+                </a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navFilmix">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navFilmix">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="collapse navbar-collapse" id="navFilmix">
+                <div class="collapse navbar-collapse" id="navFilmix">
 
-                        <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
-                            <div class="input-group">
-                                <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
-                                <button type="submit" class="search-btn">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
-                        </form>
-
-                        <ul class="navbar-nav ms-auto align-items-start">
-                            <li class="nav-item">
-                                <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
-                            </li>
-
-                            <li class="nav-item dropdown ms-lg-2">
-                                <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
-                                    <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #fff;"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
-                                    <li>
-                                        <span class="dropdown-item-text text-white px-3 py-2 d-block">
-                                            <?php
-                                            echo isset($_SESSION['nome_usuario'])
-                                                ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
-                                            ?>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <form action="logout.php" method="POST" class="m-0 px-3">
-                                            <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <main class="main-content">
-            <h1 class="favoritos-title">Meus Favoritos</h1>
-            <?php if (empty($filmes)): ?>
-                <p class="favoritos-vazio">Você ainda não adicionou nenhum filme aos favoritos. Clique na estrela na página de um filme para adicionar.</p>
-            <?php else: ?>
-                <div class="favoritos-grid">
-                    <?php foreach ($filmes as $f): ?>
-                        <?php
-                        $urlPoster = obterUrlImagem($f['poster_path']);
-                        $titulo = htmlspecialchars($f['title']);
-                        ?>
-                        <div class="favoritos-card">
-                            <a href="detalhes_filme.php?id=<?php echo $f['id']; ?>">
-                                <div class="favoritos-poster">
-                                    <?php if (!empty($urlPoster)): ?>
-                                        <img src="<?php echo $urlPoster; ?>" alt="<?php echo $titulo; ?>" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#999;font-size:12px;\'>Sem imagem</span>'">
-                                    <?php else: ?>
-                                        <span style="color:#999;font-size:12px;">Sem imagem</span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="favoritos-card-titulo"><?php echo $titulo; ?></div>
-                            </a>
+                    <form action="BarraPesquisaFilme.php" autocomplete="off" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
+                        <div class="input-group autocomplete">
+                            <input type="search" name="s" id="BarraPesquisa" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
+                            <button type="submit" class="search-btn">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </div>
-                    <?php endforeach; ?>
+                    </form>
+
+                    <ul class="navbar-nav ms-auto align-items-start">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
+                        </li>
+
+                        <li class="nav-item dropdown ms-lg-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #fff;"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+                                <li>
+                                    <span class="dropdown-item-text text-white px-3 py-2 d-block">
+                                        <?php
+                                        echo isset($_SESSION['nome_usuario'])
+                                            ? htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') : 'Visitante';
+                                        ?>
+                                    </span>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="logout.php" method="POST" class="m-0 px-3">
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
                 </div>
-            <?php endif; ?>
-        </main>
+            </div>
+        </nav>
+    </header>
 
-        <footer class="footer">
-            <div class="TMDB-logo">
-                <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
+    <main class="main-content">
+        <h1 class="favoritos-title">Meus Favoritos</h1>
+        <?php if (empty($filmes)): ?>
+            <p class="favoritos-vazio">Você ainda não adicionou nenhum filme aos favoritos. Clique na estrela na página de um filme para adicionar.</p>
+        <?php else: ?>
+            <div class="favoritos-grid">
+                <?php foreach ($filmes as $f): ?>
+                    <?php
+                    $urlPoster = obterUrlImagem($f['poster_path']);
+                    $titulo = htmlspecialchars($f['title']);
+                    ?>
+                    <div class="favoritos-card">
+                        <a href="detalhes_filme.php?id=<?php echo $f['id']; ?>">
+                            <div class="favoritos-poster">
+                                <?php if (!empty($urlPoster)): ?>
+                                    <img src="<?php echo $urlPoster; ?>" alt="<?php echo $titulo; ?>" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#999;font-size:12px;\'>Sem imagem</span>'">
+                                <?php else: ?>
+                                    <span style="color:#999;font-size:12px;">Sem imagem</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="favoritos-card-titulo"><?php echo $titulo; ?></div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="footer-disclaimer">
-                <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
-            </div>
-            <div class="footer-links">
-                <a href="TelaPrincipal.php">Ver filmes</a>
-                <a href="#">Sobre</a>
-            </div>
-        </footer>
+        <?php endif; ?>
+    </main>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    <footer class="footer">
+        <div class="TMDB-logo">
+            <img src="img/TMDBlogo.svg" style="display: flex; align-items: center; justify-content: center; height: 45%;" alt="">
+        </div>
+        <div class="footer-disclaimer">
+            <p class="mb-0">Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</p>
+        </div>
+        <div class="footer-links">
+            <a href="TelaPrincipal.php">Ver filmes</a>
+            <a href="#">Sobre</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/autocomplete.js"></script>
+    <script>
+        const barraPesquisa = document.getElementById("BarraPesquisa");
+
+        if (barraPesquisa) {
+            autocomplete(barraPesquisa);
+        }
+    </script>
+</body>
 
 </html>

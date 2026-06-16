@@ -45,9 +45,8 @@ if ($generoId > 0) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/principal.css">
-</head>
+    <link rel="stylesheet" href="css/autocomplete.css">
 
-<body>
     <style>
         body {
             background-color: #0a0a0a;
@@ -282,6 +281,8 @@ if ($generoId > 0) {
             color: #fff;
         }
     </style>
+</head>
+<body>
     <header class="header" style="background-color: #1a1a1a;">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
@@ -296,9 +297,9 @@ if ($generoId > 0) {
 
                 <div class="collapse navbar-collapse" id="navFilmix">
 
-                    <form action="BarraPesquisaFilme.php" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
-                        <div class="input-group">
-                            <input type="search" name="s" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
+                    <form action="BarraPesquisaFilme.php" autocomplete="off" method="post" class="d-flex mx-auto my-2 my-lg-0" style="width: 100%; max-width: 400px;">
+                        <div class="input-group autocomplete">
+                            <input type="search" name="s" id="BarraPesquisa" class="form-control bg-dark text-white border-secondary" placeholder="Pesquise seu filme...">
                             <button type="submit" class="search-btn">
                                 <i class="bi bi-search"></i>
                             </button>
@@ -433,6 +434,14 @@ if ($generoId > 0) {
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/autocomplete.js"></script>
+    <script>
+        const barraPesquisa = document.getElementById("BarraPesquisa");
+
+        if (barraPesquisa) {
+            autocomplete(barraPesquisa);
+        }
+    </script>
 </body>
 
 </html>
