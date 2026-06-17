@@ -3,8 +3,8 @@ require_once 'api_tmdb.php';
 
 $busca = $_GET['s'] ?? '';
 
-/* Apenas pesquisa quando tiver no mínimo 2 caracteres */
-if(strlen($busca) < 2){
+/* Apenas pesquisa quando tiver no mínimo 3 caracteres */
+if(strlen($busca) < 3){
     echo json_encode([]);
     exit;
 }
