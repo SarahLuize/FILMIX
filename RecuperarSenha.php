@@ -45,7 +45,7 @@
                 <?php echo htmlspecialchars($sucessoCadastro); ?>
             </div>
         <?php endif; ?>
-        <form action="RecebeRecuperacaoSenha.php" method="post">
+        <form action="RecebeRecuperacaoSenha.php" id="FormRecuperarSenha" method="post">
             <div class="mb-3">
                 <label for="CadastroEmailRec" class="form-label">E-mail:</label>
                 <input type="email" class="form-control" name="CadastroEmailRec" id="CadastroEmailRec" placeholder="e-mail" required>
@@ -54,6 +54,8 @@
                 <button type="submit" class="btn btn-cadastrar">Enviar</button>
             </div>
         </form>
+
+        <img src="img/carregando.gif" id="AvisarEnvioEmail" class="alert-carregando hidden" alt="GIF carregando">
     </div>
     <br><br>
 
@@ -68,6 +70,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/aviso-enviar-email.js"></script>
 </body>
 
 </html>

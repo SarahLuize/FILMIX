@@ -51,6 +51,16 @@ body {
     border: 1px solid #c3e6cb;
 }
 
+.hidden {
+    display: none;
+}
+
+.enviando-email-mensagem{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
 /* LAYOUT (Header, footer e logo TMDB no footer) */
 .header {
     padding: 20px 40px;

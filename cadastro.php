@@ -41,7 +41,7 @@
                 <?php echo htmlspecialchars($sucessoCadastro); ?>
             </div>
         <?php endif; ?>
-        <form action="RecebeCadastro.php" method="post">
+        <form action="RecebeCadastro.php" id="FormCadastro" method="post">
             <div class="mb-3">
                 <label for="CadastroNome" class="form-label">Nome:</label>
                 <input type="text" class="form-control" name="CadastroNome" id="CadastroNome" placeholder="nome" required>
@@ -77,6 +77,9 @@
                 <button type="submit" class="btn btn-cadastrar">Cadastrar</button>
             </div>
         </form>
+
+        <img src="img/carregando.gif" id="AvisarEnvioEmail" class="alert-carregando hidden" alt="GIF carregando">
+
     </div>
 
     <div class="footer">
@@ -90,6 +93,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/aviso-enviar-email.js"></script>
 </body>
 
 </html>
