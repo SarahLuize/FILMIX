@@ -51,6 +51,13 @@ body {
     border: 1px solid #c3e6cb;
 }
 
+.alert-carregando {
+    background-color: #d4edda;
+    color: #cc721e;
+    border: 1px solid #e6e6e6;
+    translate: 50%;
+}
+
 .hidden {
     display: none;
 }
