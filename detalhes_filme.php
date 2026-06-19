@@ -41,6 +41,11 @@ if($idUsuarioLogado > 0 && $idadeUsuario <=0){
 }
 
 $filmeEhParaMaiores = ($classificacao === '18' || $classificacao ==='18+' || $classificacao ==='+18' || $classificacao === 'Restrito');
+$classificacao16 = ($classificacao === '16');
+$classificacao14 = ($classificacao === '14');
+$classificacao12 = ($classificacao === '12');
+$classificacao10 = ($classificacao === '10');
+$classificacao6 = ($classificacao === '6');
 
 $podeInteragir = true;
 $estaFavorito = false;
@@ -51,6 +56,26 @@ if($idUsuarioLogado){
     $estaAssistirMaisTarde = ehAssistirMaisTarde($idUsuarioLogado, $filmeId);
 
     if($filmeEhParaMaiores && $idadeUsuario < 18){
+        $podeInteragir = false;
+    }
+
+    if($classificacao16 && $idadeUsuario < 16){
+        $podeInteragir = false;
+    }
+
+    if($classificacao14 && $idadeUsuario < 14){
+        $podeInteragir = false;
+    }
+
+    if($classificacao12 && $idadeUsuario < 12){
+        $podeInteragir = false;
+    }
+
+    if($classificacao10 && $idadeUsuario < 10){
+        $podeInteragir = false;
+    }
+
+    if($classificacao6 && $idadeUsuario < 6){
         $podeInteragir = false;
     }
 }
@@ -306,10 +331,42 @@ if($idUsuarioLogado){
                         <i class="bi bi-clock<?php echo $estaAssistirMaisTarde ? '-fill' : ''; ?>"></i>
                     </button>
                     <?php else: ?>
-                        <!-- Mensagem exibida para o usuário menor de idade-->
-                            <span class="badge bg-danger p-2" title="Recusos desativados para menores de 18 anos">
+                        <?php if ($filmeEhParaMaiores): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 18 anos">
                                 <i class="bi bi-lock-fill"></i>Interação Restrita (+18)
-                        </span>
+                                </span>
+                        <?php endif; ?>
+                        <?php if ($classificacao16): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 16 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+16)
+                                </span>
+                        <?php endif; ?>
+                        <?php if ($classificacao14): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 14 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+14)
+                                </span>
+                        <?php endif; ?>
+                        <?php if ($classificacao12): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 12 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+12)
+                                </span>
+                        <?php endif; ?>
+                        <?php if ($classificacao10): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 10 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+10)
+                                </span>
+                        <?php endif; ?>
+                        <?php if ($classificacao6): ?>
+                            <!-- Mensagem exibida para usuários abaixo da classificação indicativa -->
+                                <span class="badge bg-danger p-2" title="Recusos desativados para menores de 6 anos">
+                                <i class="bi bi-lock-fill"></i>Interação Restrita (+6)
+                                </span>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
