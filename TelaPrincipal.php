@@ -602,6 +602,14 @@ $urlPaginaPopulares = function (int $p): string {
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
+                                    <a class="dropdown-item text-white" href="#" onclick="perguntarSeQuerApagar(event)">
+                                        <i class="bi bi-transh3=fill me-2"></i>Excluir Minha Conta
+                                    </a>
+                                </li>  
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>                                  
+                                <li>
                                     <form action="logout.php" method="POST" class="m-0 px-3">
                                         <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
                                     </form>
@@ -877,6 +885,20 @@ $urlPaginaPopulares = function (int $p): string {
             setTimeout(updateFeatured, 350);
         }
             updateFeatured();
+
+        function perguntarSeQuerApagar(event){
+            event.preventDefault(); // Impede o navegador de tentar abrir o link na hora
+
+            //Exibe a mensagem exata que você definiu
+            var confirmou = confirm("Deseja apagar seus dados?\nSeus filmes salvos serão perdidos para sempre.");
+
+            if(confirmou){
+                // Se ele clicar em "OK ", o sistema leva ele para o arquivo que deleta tudo
+                window.location.href = 'excluir_conta.php';
+            }
+            // Se ele clicar em "Cancelar ", não acontece nada e ele continua logado
+
+        }
     </script>
 </body>
 

@@ -145,7 +145,7 @@ $generos = buscarGeneros();
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="TelaPrincipal.php">
+                <a class="navbar-brand" href="TelaPrincipal.php" title="Ir para página principal">
                     <img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-filmix">
                 </a>
 
@@ -188,6 +188,14 @@ $generos = buscarGeneros();
                                         ?>
                                     </span>
                                 </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white" href="#" onclick="perguntarSeQuerApagar(event)">
+                                        <i class="bi bi-transh3=fill me-2"></i>Excluir Minha Conta
+                                    </a>
+                                </li>  
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -238,6 +246,20 @@ $generos = buscarGeneros();
 
         if (barraPesquisa) {
             autocomplete(barraPesquisa);
+        }
+
+        function perguntarSeQuerApagar(event){
+            event.preventDefault(); // Impede o navegador de tentar abrir o link na hora
+
+            //Exibe a mensagem exata que você definiu
+            var confirmou = confirm("Deseja apagar seus dados?\nSeus filmes salvos serão perdidos para sempre.");
+
+            if(confirmou){
+                // Se ele clicar em "OK ", o sistema leva ele para o arquivo que deleta tudo
+                window.location.href = 'excluir_conta.php';
+            }
+            // Se ele clicar em "Cancelar ", não acontece nada e ele continua logado
+
         }
     </script>
 </body>
