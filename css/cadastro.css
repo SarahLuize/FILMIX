@@ -72,6 +72,26 @@ body {
     color: #2F2F2F;
 }
 
+/* Garante que o botão do olhinho não mude de cor drasticamente ao ser clicado */
+.input-group .btn-outline-secondary:focus,
+.input-group .btn-outline-secondary:active,
+.input-group .btn-outline-secondary:hover {
+    background-color: transparent !important; /* Mantém o fundo transparente */
+    border-color: #6c757d !important;         /* Mantém a borda cinza padrão */
+    box-shadow: none !important;              /* Remove aquela sombra azul/cinza de foco */
+}
+
+/* Força os ícones do olho a manterem uma cor visível e nítida (ajuste o #ccc se o seu fundo for escuro) */
+.input-group .btn-outline-secondary svg {
+    color: #6c757d !important; /* Cor cinza padrão do Bootstrap */
+    transition: color 0.2s ease;
+}
+
+/* Opcional: muda a cor do olho de leve quando passa o mouse por cima */
+.input-group .btn-outline-secondary:hover svg {
+    color: #212529 !important; /* Fica um pouco mais escuro (ou claro se seu fundo for dark) */
+}
+
 /* FOOTER */
 .footer {
     background-color: #666A70 !important;
