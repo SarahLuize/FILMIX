@@ -7,13 +7,15 @@ Sistema de recomendação de filmes baseado nos favoritos do usuário, criado pa
 - Cadastro e login
 - Verificação em duas etapas (confirmação de e-mail para cadastro e redefinição de senha)
 - Redefinição de senha
+- Alterar e-mail
+- Excluir conta
 - Busca de filmes
 - Detalhes dos filmes (sinopse, classificação indicativa, gênero e pôster)
 - Favoritar filmes
 - Adicionar filmes a lista de assistir mais tarde
 - Recomendações personalizadas baseadas nos favoritos
 - Navegação por gêneros para facilitar a busca por filmes específicos
-- Restrição por idade (usuários menores de 18 anos não podem favoritar ou adicionar à lista de assistir mais tarde filmes com classificação indicativa de 18 anos)
+- Restrição por idade para favoritos e lista de assistir mais tarde
 
 ## Como usar
 1. Criar uma conta e confirmar o e-mail para concluir o cadastro
