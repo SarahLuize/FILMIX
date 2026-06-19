@@ -564,3 +564,138 @@ function salvaTokenRecuperacao($email, $token, $validade){
     
 }
 
+function verificarDadosRecuperacao($username, $dataNascimento){    
+    try {       
+        $conn = obterConexao();       
+        
+        $sql =  "SELECT id_usuario, nome 
+        FROM usuario 
+        WHERE nome = ? AND data_nascimento = ? AND situacao = 1" ;
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $username, $dataNascimento);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if($resultado->num_rows > 0){
+            return $resultado->fetch_assoc();
+        }
+
+        return false;
+
+    } catch (mysqli_sql_exception $e) {      
+        die("Erro critico no banco: " . $e->getMessage());
+    }
+}
+
+function atualizarEmailUsuario($idUsuario, $novoEmail){
+    
+    try {
+        $conn = obterConexao();
+        //Atualiza o e-mail do usuário específico baseado no ID
+
+        $sql = "UPDATE usuario 
+        SET email = ? , situacao = 0
+        WHERE id_usuario = ?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("si",$novoEmail, $idUsuario);
+        $resultado = $stmt->execute();
+
+        // Retorna true se a alteração funcionou.
+
+        return $resultado;
+
+    } catch (mysqli_sql_exception $e) {
+        error_log("Erro ao atualizar e-mail de recuperaçao: " . $e->getMessage());
+        return false;
+    }
+}
+
+function enviarEmailRecuperacao($novoEmail, $idUsuario, $nomeUsuario){
+    include 'config.php';
+    $mail = new PHPMailer(true);
+
+    try {
+             
+        $mail->SMTPDebug = 0;
+        $mail->CharSet = "UTF-8"; 
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->Port       = 587;
+        $mail->Username   = 'filmix.oficial@gmail.com'; 
+        $mail->Password   = $SENHA_SMTP ; // 16 dígitos do Google
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPAuth   = true;
+        
+   
+        // Destinatários
+        $mail->setFrom('filmix.oficial@gmail.com', 'Filmix Oficial');
+        $mail->addReplyTo('filmix.oficial@gmail.com', 'Filmix Oficial');
+        $mail->addAddress($novoEmail, $nomeUsuario);
+
+        
+       
+        $idCriptografado = base64_encode($idUsuario);
+
+        $idProtegidoUrl = urlencode($idCriptografado);
+
+        $linkAtivacao = "http://localhost/filmix/AtivarNovaConta.php?id=".$idCriptografado;
+
+        // Conteúdo
+        $mail->isHTML(true);
+        $mail->Subject = 'FILMIX | Ative seu novo endereço de E-mail';
+        $mail->Body    = "<h1>Olá, " . htmlspecialchars($nomeUsuario) . "!</h1>
+                  <p>Você solicitou a alteração do seu E-mail de acesso na nossa plataforma.</p>
+                  <p>Para confirmar essa alteração e reativar sua conta</p>
+                  <br>
+                  <a href='{$linkAtivacao}' 
+                     style='background-color: #28a745; 
+                            color: #ffffff !important; 
+                            text-decoration: none; 
+                            padding: 12px 25px; 
+                            border-radius: 5px; 
+                            font-weight: bold; 
+                            display: inline-block;
+                            font-family: Arial, sans-serif;'>
+                     REATIVAR CONTA
+                  </a>                   
+                    <p>Se não foi você quem solicitou, ignore este e-mail</p>
+                  <br>
+                 ";       
+       
+        $mail->send();
+            echo " Reaviado E-mail com sucesso!";
+        return true;
+
+        } catch (Exception $e) {
+        echo "Erro detalhado com PHPMailer: {$mail->ErrorInfo}";        
+        return false;
+    }
+        
+}
+
+function ativarNovoEmailUsuario($idUsuario){
+    try {
+        //conexao com o banco de dados
+
+        $conn = obterConexao();
+
+        // Query que volta a situação para 1 (Ativo)
+        $sql = "UPDATE usuario 
+        SET situacao = 1 
+        WHERE id_usuario = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $resultado = $stmt->execute();
+
+        return $resultado;
+
+        
+    } catch (mysqli_sql_exception  $e) {
+        error_log("Erro ao ativar novo E-mail:" . $e->getMessage());
+        return false;
+    }
+}

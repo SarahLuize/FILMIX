@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-function enviarEmailRecuperacao($emailDestino, $token, $nomeUsuario){
+function enviarEmailRecuperacaoSenha($emailDestino, $token, $nomeUsuario){
     include 'config.php';
     $mail = new PHPMailer(true);
 
