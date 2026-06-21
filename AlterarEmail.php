@@ -75,16 +75,22 @@ if (isset($_POST['btn_atualizar_email'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIX | Recuperar Email</title>
+    <title>FILMIX | Alterar Email</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/index.css">
+
+    <style>
+        .margem-mensagem-aviso{
+            margin-top: 15px;
+        }
+    </style>
 </head>
 
 <body >
    <div class="mt-5 margem-t">
         <div class="logo-placeholder logo-pequena">
-            <a href="TelaPrincipal.php" title="Voltar para o login"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
+            <a href="login.php" title="Voltar para o login"><img src="img/FILMIX-logo.png" alt="FILMIX" class="logo-img" style="max-height: 130px; max-width: 200px;"></a>
         </div>
 
         <div class="banner-container-logos">
@@ -115,8 +121,8 @@ if (isset($_POST['btn_atualizar_email'])) {
                     <button type="submit" name="btn_validar" class="btn btn-entrar">Verificar Dados</button>
                 </form>
             <?php echo "\n"; else: ?>
-                <form method="POST">
-                    <p class="text-warning">Dados confirmados! Insira seu novo e-mail abaixo:</p>
+                <form method="POST" id="FormAlterarEmail">
+                    <p class="alert-warning">Dados confirmados! Insira seu novo e-mail abaixo:</p>
                     <div class="mb-3">
                         <label>Novo E-mail</label>
                         <input type="email" name="novo_email" class="form-control" required>
@@ -124,6 +130,8 @@ if (isset($_POST['btn_atualizar_email'])) {
                     <button type="submit" name="btn_atualizar_email" class="btn btn-success w-100">Atualizar e Enviar Ativação</button>
                 </form>
             <?php endif; ?>
+
+            <img src="img/carregando.gif" id="AvisarEnvioEmail" class="alert-carregando hidden margem-mensagem-aviso" alt="GIF carregando">
             
             <div class="text-center mt-3 criar-conta-link">
                 <a href="login.php">Voltar para o Login</a>
@@ -141,5 +149,6 @@ if (isset($_POST['btn_atualizar_email'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/aviso-enviar-email.js"></script>
 </body>
 </html>

@@ -58,6 +58,12 @@ body {
     translate: 50%;
 }
 
+.alert-warning{
+    background-color: #e6e6e6;
+    color: #c7920c;
+    border: 1px solid #e6e6e6;
+}
+
 .hidden {
     display: none;
 }
@@ -147,6 +153,10 @@ body {
 .input-group .btn,
 .input-group .search-btn {  
     height: 38px;
+}
+
+.btn-success:hover {
+    background-image: linear-gradient(to right, #BF0413 , #F25C05);
 }
 
 /* LOGOS E FORMULÁRIOS*/
