@@ -73,7 +73,7 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro'], $_SESSION['erro_lo
             <div class="mb-3">
                 <label class="form-label">Senha</label>
                 <div class="input-group">
-                    <input type="password" name="LoginSenha" id="campo-senha" placeholder="Insira seu Senha" class="form-control" required>
+                    <input type="password" name="LoginSenha" id="campo-senha" placeholder="Insira sua senha" class="form-control" required>
                     
                     <button class="btn btn-outline-secondary" type="button" 
                             style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
