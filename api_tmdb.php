@@ -134,6 +134,8 @@ function montarRecomendadosParaUsuarioPorFavoritos(array $idsFavoritosTmdb, int 
         return (float) ($b['popularity'] ?? 0) <=> (float) ($a['popularity'] ?? 0);
     });
 
+    shuffle($merged);
+
     $merged = array_slice($merged, 0, $limite);
 
     if (count($merged) < $limite) {
