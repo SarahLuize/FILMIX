@@ -280,6 +280,16 @@ if ($generoId > 0) {
             background-color: #3a3a3a;
             color: #fff;
         }
+
+        .btn-fazer-login{
+            background-color: #F29F05;
+            color: #0F0F0F;
+        }
+        .btn-fazer-login:hover{
+            background-image: linear-gradient(to right, #BF0413 , #F25C05);
+            border-color: #F25C05;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -307,15 +317,17 @@ if ($generoId > 0) {
                     </form>
 
                     <ul class="navbar-nav ms-auto align-items-start">
-                        <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
-                        </li>
+                        <?php if (isset($_SESSION['id_usuario'])): ?>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 text-white" href="assistir_mais_tarde.php">Assistir mais Tarde</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 text-white" href="favoritos.php">Favoritos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 text-white" href="Generos_Filmes.php">Gêneros</a>
+                            </li>
+                        <?php endif; ?>
 
                         <li class="nav-item dropdown ms-lg-2">
                             <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
@@ -330,22 +342,30 @@ if ($generoId > 0) {
                                         ?>
                                     </span>
                                 </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white" href="#" onclick="perguntarSeQuerApagar(event)">
-                                        <i class="bi bi-transh3=fill me-2"></i>Excluir Minha Conta
-                                    </a>
-                                </li> 
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>   
-                                <li>
-                                    <form action="logout.php" method="POST" class="m-0 px-3">
-                                        <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
-                                    </form>
-                                </li>
+                                <?php if (isset($_SESSION['id_usuario'])): ?>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white" href="#" onclick="perguntarSeQuerApagar(event)">
+                                            <i class="bi bi-transh3=fill me-2"></i>Excluir Minha Conta
+                                        </a>
+                                    </li>  
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>                                  
+                                    <li>
+                                        <form action="logout.php" method="POST" class="m-0 px-3">
+                                            <button type="submit" class="btn btn-sm btn-danger w-100">Sair</button>
+                                        </form>
+                                    </li>
+                                <?php else: ?>
+                                    <li>
+                                        <form action="login.php" method="POST" class="m-0 px-3">
+                                            <button type="submit" class="btn btn-sm btn-fazer-login w-100">Fazer login</button>
+                                        </form>
+                                    </li>
+                                <?php endif; ?>                   
                             </ul>
                         </li>
                     </ul>
