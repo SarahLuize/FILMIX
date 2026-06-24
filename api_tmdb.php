@@ -125,6 +125,13 @@ function montarRecomendadosParaUsuarioPorFavoritos(array $idsFavoritosTmdb, int 
         usleep(150000);
     }
 
+    //embaralha as recomendações
+    shuffle($merged);
+
+    //Limita a quantidade de recomendações exibidas
+    $merged = array_slice($merged, 0, $limite);
+
+    //ordena os filmes selecionados por nota e popularidade
     usort($merged, function ($a, $b) {
         $va = (float) ($a['vote_average'] ?? 0);
         $vb = (float) ($b['vote_average'] ?? 0);
@@ -133,10 +140,6 @@ function montarRecomendadosParaUsuarioPorFavoritos(array $idsFavoritosTmdb, int 
         }
         return (float) ($b['popularity'] ?? 0) <=> (float) ($a['popularity'] ?? 0);
     });
-
-    shuffle($merged);
-
-    $merged = array_slice($merged, 0, $limite);
 
     if (count($merged) < $limite) {
         $pop = buscarFilmesPopulares(1);
