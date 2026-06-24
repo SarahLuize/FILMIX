@@ -59,7 +59,7 @@
                     <input type="password" class="form-control" name="CadastroSenha" id="CadastroSenha" placeholder="senha" required>
 
                     <button class="btn btn-outline-secondary" type="button"
-                        style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;"
+                        style="background-color: #ffffff !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;"
                         onclick="toggleSenha('CadastroSenha', 'olho-aberto', 'olho-fechado')">
                         <svg id="olho-aberto" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             style="color: #495057 !important; display: block;" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -82,7 +82,7 @@
                 <div class="input-group">
                     <input type="password" class="form-control" name="CadastroSenhaConfirmar" id="CadastroSenhaConfirmar" placeholder="Confirme a senha" required>
                     <button class="btn btn-outline-secondary" type="button"
-                        style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;"
+                        style="background-color: #ffffff !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;"
                         onclick="toggleSenha('CadastroSenhaConfirmar', 'olho-aberto-confirma', 'olho-fechado-confirma')">
                         <svg id="olho-aberto-confirma" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             style="color: #495057 !important; display: block;" class="bi bi-eye-fill" viewBox="0 0 16 16">

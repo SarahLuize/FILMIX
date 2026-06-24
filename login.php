@@ -76,7 +76,7 @@ unset($_SESSION['erro_login'], $_SESSION['sucesso_cadastro'], $_SESSION['erro_lo
                     <input type="password" name="LoginSenha" id="campo-senha" placeholder="Insira sua senha" class="form-control" required>
                     
                     <button class="btn btn-outline-secondary" type="button" 
-                            style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
+                            style="background-color: #ffffff !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
                             onclick="toggleSenha('campo-senha', 'olho-aberto', 'olho-fechado')">
                         
                         <svg id="olho-aberto" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 

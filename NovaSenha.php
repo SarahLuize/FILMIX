@@ -56,7 +56,7 @@ if(empty($token)){
                         <input type="password" class="form-control" name="nova_senha" id="nova_senha" required placeholder="Digite a nova senha">
 
                             <button class="btn btn-outline-secondary" type="button" 
-                                    style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
+                                    style="background-color: #ffffff !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
                                     onclick="toggleSenha('nova_senha', 'olho-aberto', 'olho-fechado')">                            
                                 <svg id="olho-aberto" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
                                     style="color: #495057 !important; display: block;" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -81,7 +81,7 @@ if(empty($token)){
                     <input type="password" class="form-control" name="confirmar_senha" id="confirmar_senha" required placeholder="Repita a nova senha">
 
                         <button class="btn btn-outline-secondary" type="button" 
-                                    style="background-color: transparent !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
+                                    style="background-color: #ffffff !important; border-color: #ced4da !important; border-left: none !important; box-shadow: none !important;" 
                                     onclick="toggleSenha('confirmar_senha', 'olho-aberto-confirma', 'olho-fechado-confirma')">                                
                                 <svg id="olho-aberto-confirma" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
                                     style="color: #495057 !important; display: block;" class="bi bi-eye-fill" viewBox="0 0 16 16">
