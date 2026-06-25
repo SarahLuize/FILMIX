@@ -8,7 +8,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 function enviarEmailRecuperacaoSenha($emailDestino, $token, $nomeUsuario){
     include 'config.php';
     $mail = new PHPMailer(true);
-
+    //Procedimento para enviar Email para altera Senha (Recuperar Senha)
     try {
         $mail->SMTPDebug = 0;
         $mail->CharSet = "UTF-8"; 
@@ -37,12 +37,12 @@ function enviarEmailRecuperacaoSenha($emailDestino, $token, $nomeUsuario){
                 <br><br>
                 <p>Este link expira em 30 minutos.</p>
                 <p>Se não foi você quem solicitou, ignore este e-mail</p>
-            </dvi>  
+            </div>  
             ";
         //$mail->AltBody = "Olá, $nomeUsuario! Para ativar sua conta, copie e cole o link no navegador: http://localhost/filmix/validaEmail.php?token=$token";
         return $mail->send();        
     } catch (Exception $e) {
-        echo "Erro detalhado com PHPMailer: ($mail->ErrorInfo)";
+       
         return false;
     }
 }

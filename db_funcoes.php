@@ -34,7 +34,7 @@ function inserirUsuario($nome, $email, $data_nascimento, $senha, $token = null, 
     
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $query = "INSERT INTO usuario (nome, email, data_nascimento, senha, token, validade, situacao) 
-    VALUES (?, ?, ?, ?, ?,  DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
+    VALUES (?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 12 HOUR), ?)";
     
     $stmt = mysqli_prepare($conn, $query);
 
@@ -495,7 +495,7 @@ function listarIdsAssistirMaisTardePorUsuario($idUsuario) {
 
 function enviarEmailAtivacao($emailDestino, $nomeUsuario, $token) {
     include 'config.php';
-
+    //Procedimento para Envio de Email para ativar Conta (Cadastro)
     try {
         $mail = new PHPMailer(true);
    
@@ -616,7 +616,7 @@ function atualizarEmailUsuario($idUsuario, $novoEmail){
 function enviarEmailRecuperacao($novoEmail, $idUsuario, $nomeUsuario){
     include 'config.php';
     $mail = new PHPMailer(true);
-
+    //Procedimento para Envio de Email para troca de Email
     try {
              
         $mail->SMTPDebug = 0;
@@ -666,11 +666,11 @@ function enviarEmailRecuperacao($novoEmail, $idUsuario, $nomeUsuario){
                  ";       
        
         $mail->send();
-            echo " Reaviado E-mail com sucesso!";
+          
         return true;
 
         } catch (Exception $e) {
-        echo "Erro detalhado com PHPMailer: {$mail->ErrorInfo}";        
+        
         return false;
     }
         

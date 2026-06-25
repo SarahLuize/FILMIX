@@ -1,9 +1,9 @@
 <?php
+session_start();
 
 require_once 'db_funcoes.php';
 require_once 'lib/EnviarEmailRecuperacao.php';
 
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: RecuperarSenha.php');
@@ -23,13 +23,13 @@ if ($usuario) {
        date_default_timezone_set('America/Sao_Paulo');
         $validade = date('Y-m-d H:i:s', strtotime('+24 HOUR'));
 
-        // Salva no banco (Usando uma funcao que criaremos no db_funcoes)
+
         if(atualizarTokenRecuperacao($emailRec, $token, $validade)){
             //Envia o e-mai
-            if(EnviarEmailRecuperacao($emailRec, $token, $usuario['nome'])){
+            if(EnviarEmailRecuperacaoSenha($emailRec, $token, $usuario['nome'])){
                 $_SESSION['sucesso_cadastro'] = "Link de recuperação enviado com sucesso! Verifique seu e-mail.";
             }else{
-                $_SESSION['erro_cadastro'] = "Erro ao enviar o e-mail. Tente novamente mais tarde.";
+                $_SESSION['erro_cadastro'] = "Não foi possível conectar ao servidor para enviar o e-mail. Verifique sua conexão e tente novamente.";
             }
      }    
     }else{
@@ -42,29 +42,4 @@ if ($usuario) {
 }
 
 header('Location: RecuperarSenha.php');
-exit;
-
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: cadastro.php');
-    exit;
-}
-
-$emailRec = isset($_POST['CadastroEmailRec']) ? trim($_POST['CadastroEmailRec']) : '';
-$usuario = buscarUsuarioPorEmail($emailRec);
-
-if ($usuarioExistente) {
-    $_SESSION['erro_cadastro'] = 'Este e-mail já está cadastrado no sistema. Por favor, use outro e-mail ou faça login.';
-    header('Location: cadastro.php');
-    exit;
-}
-
-$_SESSION['id_usuario'] = $usuario['id_usuario'];
-$_SESSION['nome_usuario'] = $usuario['nome'];
-$_SESSION['email_usuario'] = $usuario['email'];
-
-unset($_SESSION['erro_recuperacao_senha']);
-
-header('Location: login.php');
 exit;
